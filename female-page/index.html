@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAMURY | Female Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    /* BODY */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    button {
+      background-color:black;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 20px 10px;
+      border-bottom: 1px solid #222;
+      position: relative;
+    }
+
+    header h1 {
+  font-family: 'Playfair Display', serif;
+  color: gold;
+  letter-spacing: 2px;
+  margin: 1px 0 0; /* top, right/left, bottom */
+  font-size: 28px;
+  text-align: left; /* aligns title to the left if needed */
+  padding-left: 15px; /* optional: add spacing from the left edge */
+}
+
+
+    .back-btn {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: gold;
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #fff;
+    }
+
+    /* BANNER */
+    .banner {
+      background: url('https://images.unsplash.com/photo-1602810310070-8b8b2ee41f5a') center / cover no-repeat;
+      text-align: center;
+      padding: 60px 15px;
+      color: gold;
+    }
+
+    .banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin: 0;
+      letter-spacing: 1.5px;
+    }
+
+    .banner p {
+      font-family: 'Poppins', sans-serif;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    /* PRODUCTS GRID */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px 15px;
+    }
+
+    .product {
+      background: #111;
+      border: 1px solid gold;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .product.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px rgba(255,215,0,0.3);
+    }
+
+    /* IMAGE */
+    .image-box {
+      position: relative;
+      overflow: hidden;
+      height: 450px;
+    }
+
+    .image-box img.product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .product:hover .product-img {
+      transform: scale(1.05);
+    }
+
+.image-box img.watermark {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;            /* bottom-left */
+  width: 70px;            /* slightly smaller */
+  height: 70px;           /* maintain circle */
+  opacity: 1;
+  pointer-events: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  padding: 8px;
+  object-fit: contain;
+  border: 2px solid gold;
+  box-shadow: 0 0 6px rgba(255,215,0,0.6); /* subtle glow */
+}
+
+    /* PRODUCT DETAILS */
+    .product-details {
+      padding: 10px 5px;
+      text-align: center;
+    }
+
+    .product-details h3 {
+      font-family: 'Playfair Display', serif;
+      color: gold;
+      margin: 3px 0;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    .product-details h3:hover {
+      text-decoration: underline gold 1px;
+    }
+
+    .price {
+      color: #ccc;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .product-details button {
+      display: inline-block;
+      padding: 8px 18px;
+      background: gold;
+      color: #000;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .product-details button:hover {
+      background: #fff;
+      box-shadow: 0 0 8px gold;
+    }
+ /* 🔹 ADD TO CART BUTTON (NEW) */
+    .cart-btn {
+      display: inline-block;
+      padding: 10px 26px;
+      background: transparent;
+      color: gold;
+      border: 1px solid gold;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cart-btn:hover {
+      background: gold;
+      color: #000;
+    }
+    /* POPUP */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup {
+      background: #111;
+      padding: 20px 15px;
+      border: 1px solid gold;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 280px;
+    }
+
+    .popup h3 {
+      color: gold;
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .popup button {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .popup button.whatsapp { background: #25D366; color: #fff; }
+    .popup button.instagram { background: #C13584; color: #fff; }
+    .popup button.tiktok { background: #69C9D0; color: #000; }
+    .popup button:hover { opacity: 0.9; }
+
+    .popup .close-btn {
+      background: transparent;
+      color: gold;
+      border: 1px solid gold;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 12px;
+      color: #777;
+      border-top: 1px solid #222;
+    }
+
+    footer a { color: gold; margin: 0 5px; text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      header h1 { font-size: 24px; }
+      .banner h2 { font-size: 24px; }
+      .banner p { font-size: 13px; }
+      .image-box { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <button class="back-btn" onclick="window.location.href='/Homepage/index.html'">
+      <i class="fa-solid fa-circle-left"></i> Back
+    </button>
+    <h1>FEMALE COLLECTION</h1>
+  </header>
+  <!-- Add this section BELOW the header and ABOVE the products -->
+<section class="filter-section" style="padding:20px; text-align:center; background:#111; border-bottom:1px solid gold;">
+  <label for="minPrice">Min Price (KES): </label>
+  <input type="number" id="minPrice" placeholder="0" style="width:80px; padding:5px; border-radius:5px; border:1px solid gold; margin-right:15px; color:#fff; background:#000;">
+  
+  <label for="maxPrice">Max Price (KES): </label>
+  <input type="number" id="maxPrice" placeholder="10000" style="width:80px; padding:5px; border-radius:5px; border:1px solid gold; margin-right:15px; color:#fff; background:#000;">
+  
+  <button onclick="filterByPrice()">Filter</button>
+  <button onclick="resetFilter()" style="margin-left:10px;">Reset</button>
+</section>
+
+  <!-- PRODUCTS -->
+  <section class="products">
+
+    <div class="product" data-name="Luxury Black Abaya">
+      <div class="image-box">
+        <img src="/pics/WhatsApp Image 2026-02-03 at 16.53.56.jpeg" class="product-img" alt="Luxury Black Abaya">
+        <img src="/pics/image.png" class="watermark" alt="SAMURY">
+      </div>
+      <div class="product-details">
+        <h3>Luxury Black Abaya</h3>
+        <p class="price">KES 6,500</p>
+        <button class="buy-now">Buy Now</button>
+         <button class="cart-btn" onclick="addToCart('Luxury Black Abaya')">
+        Add to Cart
+      </button>
+    </div>
+      </div>
+    </div>
+
+    <div class="product" data-name="Gold Trim Modest Dress">
+      <div class="image-box">
+        <img src="/pics/WhatsApp Image 2026-02-03 at 16.53.58.jpeg" class="product-img" alt="Gold Trim Dress">
+        <img src="/pics/image.png" class="watermark" alt="SAMURY">
+      </div>
+      <div class="product-details">
+        <h3>Gold Trim Modest Dress</h3>
+        <p class="price">KES 7,200</p>
+        <button class="buy-now">Buy Now</button>
+         <button class="cart-btn" onclick="addToCart('Gold Trim Modest Dress')">
+        Add to Cart
+      </button>
+    </div>
+      </div>
+    </div>
+
+    <div class="product" data-name="Elegant Kimono Abaya">
+      <div class="image-box">
+        <img src="/pics/WhatsApp Image 2026-02-03 at 16.53.58 (1).jpeg" class="product-img" alt="Elegant Kimono">
+        <img src="/pics/image.png" class="watermark" alt="SAMURY">
+      </div>
+      <div class="product-details">
+        <h3>Elegant Kimono Abaya</h3>
+        <p class="price">KES 8,000</p>
+        <button class="buy-now">Buy Now</button>
+         <button class="cart-btn" onclick="addToCart('Elegant Kimono Abaya')">
+        Add to Cart
+      </button>
+    </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- POPUP -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+      <h3>Select Platform</h3>
+      <button class="whatsapp">WhatsApp</button>
+      <button class="instagram">Instagram</button>
+      <button class="tiktok">TikTok</button>
+      <button class="close-btn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 SAMURY — Female Collection
+    <br>
+    <a href="https://wa.me/254112639083">WhatsApp</a> |
+    <a href="https://instagram.com/samuryartelier">Instagram</a> |
+    <a href="https://tiktok.com/@SAMURY">TikTok</a>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    const products = document.querySelectorAll('.product');
+    const popupOverlay = document.getElementById('popupOverlay');
+    let currentProduct = '';
+
+    document.querySelectorAll('.buy-now').forEach(button => {
+      button.addEventListener('click', (e) => {
+        currentProduct = e.target.closest('.product').dataset.name;
+        popupOverlay.style.display = 'flex';
+      });
+    });
+
+    document.querySelector('.close-btn').addEventListener('click', () => {
+      popupOverlay.style.display = 'none';
+    });
+
+    document.querySelector('.whatsapp').addEventListener('click', () => {
+      const msg = encodeURIComponent(`Hello SAMURY, I would like to order the ${currentProduct}.`);
+      window.open(`https://wa.me/254112639083?text=${msg}`, '_blank');
+      popupOverlay.style.display = 'none';
+    });
+
+    document.querySelector('.instagram').addEventListener('click', () => {
+      window.open('https://www.instagram.com/samuryartelier', '_blank');
+      popupOverlay.style.display = 'none';
+    });
+
+    document.querySelector('.tiktok').addEventListener('click', () => {
+      window.open('https://www.tiktok.com/@SAMURY', '_blank');
+      popupOverlay.style.display = 'none';
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    products.forEach(product => observer.observe(product));
+  </script>
+<script>
+function addToCart(itemName) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let existing = cart.find(item => item.name === itemName);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    
+    let price = 0;
+    switch(itemName) {
+      case "Female Shopping":
+        price = 7500;
+        break;
+      case "Gold Trim Modest Dress":
+        price = 7200;
+        break;
+      case "Elegant Kimono Abaya":
+        price = 8000;
+        break;
+      default:
+        price = 0;
+    }
+    cart.push({
+      name: itemName,
+      qty: 1,
+      price: price
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  if(confirm(itemName + " added to cart. View cart?")) {
+    window.location.href = '/cart/index.html';
+  }
+}
+function filterByPrice() {
+  const min = parseInt(document.getElementById('minPrice').value) || 0;
+  const max = parseInt(document.getElementById('maxPrice').value) || Infinity;
+
+  products.forEach(product => {
+    const priceText = product.querySelector('.price').textContent;
+    const price = parseInt(priceText.replace(/[^0-9]/g, '')); // extract number
+    if (price >= min && price <= max) {
+      product.style.display = 'flex';
+    } else {
+      product.style.display = 'none';
+    }
+  });
+}
+
+function resetFilter() {
+  document.getElementById('minPrice').value = '';
+  document.getElementById('maxPrice').value = '';
+  products.forEach(product => product.style.display = 'flex');
+}
+function filterByPrice() {
+  const min = parseInt(document.getElementById('minPrice').value) || 0;
+  const max = parseInt(document.getElementById('maxPrice').value) || Infinity;
+
+  products.forEach(product => {
+    const priceText = product.querySelector('.price').textContent;
+    const price = parseInt(priceText.replace(/[^0-9]/g, '')); // extract number
+    if (price >= min && price <= max) {
+      product.style.display = 'flex';
+    } else {
+      product.style.display = 'none';
+    }
+  });
+}
+
+function resetFilter() {
+  document.getElementById('minPrice').value = '';
+  document.getElementById('maxPrice').value = '';
+  products.forEach(product => product.style.display = 'flex');
+}
+
+</script>
+
+</body>
+</html>

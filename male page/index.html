@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAMURY | Male Collection</title>
+
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* GLOBAL */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header {
+      position: relative;
+      background: linear-gradient(to right, #000, #111), url('https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb') center/cover no-repeat;
+      padding: 40px 30px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #222;
+    }
+    .holder {
+      display: flex;
+      align-items: center;
+    }
+    header img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid gold;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+    header .title {
+      text-align: left;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: gold;
+      letter-spacing: 2px;
+    }
+    header p {
+      color: #ccc;
+      font-size: 15px;
+      margin-top: 5px;
+    }
+
+    /* HEADER ICONS */
+    .header-icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 24px;
+      padding:18px 12px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 10000;
+      color: gold;
+      cursor: pointer;
+    }
+    .header-icons i:hover { color: #fff; }
+
+    /* SIDE MENU */
+    .side-menu {
+      position: fixed;
+      top: 0; right: -250px;
+      width: 250px;
+      height: 100%;
+      background: #111;
+      border-left: 2px solid gold;
+      transition: right 0.3s ease;
+      z-index: 9999;
+      padding: 40px 20px;
+    }
+    .side-menu.active { right: 0; }
+    .side-menu .close-menu {
+      font-size: 24px;
+      color: gold;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+    .side-menu a {
+      display: block;
+      margin: 15px 0;
+      font-size: 16px;
+      color: #fff;
+      transition: 0.3s;
+    }
+    .side-menu a:hover { color: gold; }
+
+    /* COMING SOON SECTION */
+    .coming-soon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 70vh;
+      text-align: center;
+      padding: 20px;
+      color: gold;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .coming-soon h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+    .coming-soon p {
+      font-size: 18px;
+      margin-bottom: 25px;
+      color: #ccc;
+    }
+    .coming-soon i {
+      font-size: 60px;
+      margin-bottom: 20px;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* RECOMMENDED FEATURES */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .feature-card {
+      background: #111;
+      border: 1px solid gold;
+      border-radius: 20px;
+      padding: 25px 20px;
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 20px rgba(255,215,0,0.4);
+    }
+    .feature-card i {
+      font-size: 36px;
+      color: gold;
+      margin-bottom: 15px;
+    }
+    .feature-card h3 {
+      font-size: 18px;
+      color: gold;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111;
+      padding: 40px 20px;
+      text-align: center;
+      color: #777;
+      border-top: 1px solid #222;
+      font-size: 13px;
+    }
+    footer .socials {
+      margin: 10px 0;
+    }
+    footer .socials a {
+      margin: 0 10px;
+      color: gold;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    footer .socials a:hover { text-shadow: 0 0 8px gold; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      header { flex-direction: column; text-align: center; }
+      header .title { margin-left: 0; margin-top: 10px; }
+      .features { gap: 20px; padding: 30px 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER ICONS -->
+  <div class="header-icons">
+    <div style="position: relative;">
+      <i class="fa-solid fa-cart-shopping" id="cartBtn" title="Cart"></i>
+      <span id="cartCount" style="position:absolute; top:-8px; right:-10px; background:gold; color:#000; font-size:12px; font-weight:bold; padding:2px 6px; border-radius:50%;">0</span>
+    </div>
+    <i class="fa-solid fa-ellipsis-vertical" id="menuBtn" title="Menu"></i>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="holder">
+      <img src="/logo/logo.png" alt="SAMURY Logo">
+      <div class="title">
+        <h1>SAMURY</h1>
+        <p>Luxury Modest Fashion — Crafted with Elegance</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDE MENU -->
+  <div class="side-menu" id="sideMenu">
+    <i class="fa-solid fa-x close-menu" id="closeMenu"></i>
+    <a href="#">Home</a>
+    <a href="/female-page/index.html">Female Shopping</a>
+    <a href="#">Male Shopping</a>
+    <a href="https://wa.me/254112639083">WhatsApp</a>
+    <a href="https://instagram.com/samuryartelier">Instagram</a>
+    <a href="https://tiktok.com/@SAMURY">TikTok</a>
+  </div>
+
+  <!-- COMING SOON -->
+  <section class="coming-soon">
+    <i class="fa-solid fa-shirt"></i>
+    <h2>Male Collection Coming Soon!</h2>
+    <p>We are crafting refined modest menswear for modern elegance.<br>Stay tuned and check back later.</p>
+  </section>
+
+  <!-- RECOMMENDED FEATURES PLACEHOLDERS -->
+  <section class="features">
+    <div class="feature-card">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <h3>Online Cart</h3>
+      <p>Add your favorite items to the cart and purchase seamlessly.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-heart"></i>
+      <h3>Wishlist</h3>
+      <p>Save your preferred items to your wishlist for easy access later.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-star"></i>
+      <h3>Product Reviews</h3>
+      <p>Rate and review products to help others shop with confidence.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-filter"></i>
+      <h3>Filters & Sorting</h3>
+      <p>Sort products by price, popularity, or category for easy browsing.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Shop via WhatsApp • Instagram • TikTok</p>
+    <div class="socials">
+      <a href="https://wa.me/254112639083">WhatsApp</a>
+      <a href="https://instagram.com/samuryartelier">Instagram</a>
+      <a href="https://tiktok.com/@SAMURY">TikTok</a>
+    </div>
+    <p style="margin-top:10px;">© 2026 SAMURY. All Rights Reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+    document.getElementById('cartCount').textContent = cart.length;
+
+    // Side Menu
+    const sideMenu = document.getElementById('sideMenu');
+    document.getElementById('menuBtn').addEventListener('click', () => sideMenu.classList.add('active'));
+    document.getElementById('closeMenu').addEventListener('click', () => sideMenu.classList.remove('active'));
+
+    // Cart Button
+    document.getElementById('cartBtn').addEventListener('click', () => {
+      window.location.href = '/cart/index.html';
+    });
+  </script>
+
+</body>
+</html>
