@@ -193,6 +193,20 @@
       header .title { margin-left: 0; margin-top: 10px; }
       .features { gap: 20px; padding: 30px 15px; }
     }
+    /* Disable text selection on the whole page */
+body {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE10+/Edge */
+  user-select: none;         /* Standard */
+}
+button, .back-btn, .cart-btn, .product-img {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
   </style>
 </head>
 <body>

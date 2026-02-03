@@ -268,6 +268,20 @@
       .product-details button, .cart-btn { font-size: 11px; padding: 5px 12px; }
       .filter-section input { width: 60px; padding: 4px; margin-right: 10px; }
     }
+    button, .back-btn, .cart-btn, .product-img {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Disable text selection on the whole page */
+body {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE10+/Edge */
+  user-select: none;         /* Standard */
+}
+
   </style>
 </head>
 <body>

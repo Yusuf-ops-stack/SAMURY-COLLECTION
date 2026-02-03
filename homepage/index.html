@@ -1,269 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAMURY | Luxury Modest Wear</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMURY | Luxury Modest Wear</title>
 
-  <!-- Google Fonts & Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts & Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    /* GLOBAL */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Poppins', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
-    a { text-decoration: none; }
+<style>
+/* GLOBAL */
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family:'Poppins',sans-serif; background:#000; color:#fff; overflow-x:hidden; }
+a { text-decoration:none; }
+button, .header-icons i { user-select:none; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; cursor:pointer; }
 
-    /* HEADER */
-    header {
-      position: relative;
-      background: linear-gradient(to right, #000, #111), url('https://images.unsplash.com/photo-1602810310070-8b8b2ee41f5a') center/cover no-repeat;
-      padding: 40px 30px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #222;
-    }
-    .holder {
-      display: flex;
-      align-items: center;
-    }
-    header img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 2px solid gold;
-      object-fit: cover;
-      margin-right: 20px;
-    }
-    header .title {
-      text-align: left;
-    }
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 36px;
-      color: gold;
-      letter-spacing: 2px;
-    }
-    header p {
-      color: #ccc;
-      font-size: 15px;
-      margin-top: 5px;
-    }
+/* HEADER */
+header {
+  position: relative;
+  background: linear-gradient(to right, #000, #111), url('https://images.unsplash.com/photo-1602810310070-8b8b2ee41f5a') center/cover no-repeat;
+  padding: 40px 30px 20px;
+  display: flex; flex-wrap: wrap; align-items:center; justify-content: space-between;
+  border-bottom:1px solid #222;
+}
+.holder { display:flex; align-items:center; flex:1; min-width:200px; }
+header img { width:100px; height:100px; border-radius:50%; border:2px solid gold; object-fit:cover; margin-right:15px; }
+header .title { text-align:left; }
+header h1 { font-family:'Playfair Display',serif; font-size:32px; color:gold; letter-spacing:2px; }
+header p { color:#ccc; font-size:14px; margin-top:4px; }
 
-    /* HEADER ICONS */
-    .header-icons {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      font-size: 24px;
-     padding:18px 12px;
-     position: fixed;
-     top: 0;
-     z-index: 10000;
-      right: 0;
-      color: gold;
-      cursor: pointer;
-    }
-    .header-icons i:hover { color: #fff; }
+/* HEADER ICONS */
+.header-icons {
+  display:flex; align-items:center; gap:20px;
+  font-size:24px; color:gold; position:fixed; top:10px; right:10px; z-index:10000;
+}
+.header-icons i:hover { color:#fff; }
 
-    /* SIDE MENU */
-    .side-menu {
-      position: fixed;
-      top: 0; right: -250px;
-      width: 250px;
-      height: 100%;
-      background: #111;
-      border-left: 2px solid gold;
-      transition: right 0.3s ease;
-      z-index: 9999;
-      padding: 40px 20px;
-    }
-    .side-menu.active { right: 0; }
-    .side-menu .close-menu {
-      font-size: 24px;
-      color: gold;
-      cursor: pointer;
-      margin-bottom: 30px;
-    }
-    .side-menu a {
-      display: block;
-      margin: 15px 0;
-      font-size: 16px;
-      color: #fff;
-      transition: 0.3s;
-    }
-    .side-menu a:hover { color: gold; }
+/* SIDE MENU */
+.side-menu {
+  position:fixed; top:0; right:-260px; width:260px; height:100%; background:#111; border-left:2px solid gold;
+  transition:right 0.3s ease; z-index:9999; padding:50px 20px;
+}
+.side-menu.active { right:0; }
+.side-menu .close-menu { font-size:24px; color:gold; cursor:pointer; margin-bottom:30px; }
+.side-menu a { display:block; margin:15px 0; font-size:16px; color:#fff; transition:0.3s; }
+.side-menu a:hover { color:gold; }
 
-    /* CATEGORIES */
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-      padding: 60px 40px;
-    }
-    .category {
-      position: relative;
-      background: linear-gradient(145deg, #111, #000);
-      border: 1px solid gold;
-      border-radius: 20px;
-      padding: 50px 30px 40px;
-      text-align: center;
-      transition: all 0.4s ease;
-      overflow: hidden;
-    }
-    .category::before {
-      content: '';
-      position: absolute;
-      width: 150%;
-      height: 150%;
-      top: -25%;
-      left: -25%;
-      background: rgba(255,215,0,0.05);
-      transform: rotate(45deg);
-    }
-    .category:hover { transform: translateY(-10px); box-shadow: 0 0 25px rgba(255,215,0,0.4); }
-    .category h2 {
-      font-family: 'Playfair Display', serif;
-      color: gold;
-      font-size: 22px;
-      margin-bottom: 12px;
-      letter-spacing: 1.5px;
-      z-index: 1;
-      position: relative;
-    }
-    .category p {
-      font-size: 14px;
-      color: #ccc;
-      margin-bottom: 25px;
-      z-index: 1;
-      position: relative;
-    }
-    .category a {
-      display: inline-block;
-      padding: 12px 28px;
-      background: gold;
-      color: #000;
-      font-weight: bold;
-      border-radius: 30px;
-      transition: 0.3s;
-      z-index: 1;
-      position: relative;
-    }
-    .category a:hover { background: #fff; box-shadow: 0 0 10px gold; }
+/* OVERLAY */
+.overlay {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.7); z-index:999; display:none;
+}
 
-    /* FOOTER */
-    footer {
-      background: #111;
-      padding: 40px 20px;
-      text-align: center;
-      color: #777;
-      border-top: 1px solid #222;
-      font-size: 13px;
-    }
-    footer .socials {
-      margin: 10px 0;
-    }
-    footer .socials a {
-      margin: 0 10px;
-      color: gold;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    footer .socials a:hover { text-shadow: 0 0 8px gold; }
+/* CATEGORIES */
+.categories {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; padding:60px 30px;
+}
+.category {
+  position:relative; background:linear-gradient(145deg,#111,#000); border:1px solid gold; border-radius:20px;
+  padding:50px 20px 40px; text-align:center; transition:all 0.3s ease; overflow:hidden;
+}
+.category::before {
+  content:''; position:absolute; width:150%; height:150%; top:-25%; left:-25%;
+  background:rgba(255,215,0,0.05); transform:rotate(45deg);
+}
+.category:hover { transform:translateY(-8px); box-shadow:0 0 25px rgba(255,215,0,0.4); }
+.category h2 { font-family:'Playfair Display',serif; color:gold; font-size:20px; margin-bottom:12px; position:relative; z-index:1; }
+.category p { font-size:14px; color:#ccc; margin-bottom:20px; position:relative; z-index:1; }
+.category a {
+  display:inline-block; padding:10px 26px; background:gold; color:#000; font-weight:bold;
+  border-radius:25px; transition:0.3s; z-index:1; position:relative;
+}
+.category a:hover { background:#fff; box-shadow:0 0 10px gold; }
 
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      header { flex-direction: column; text-align: center; }
-      header .title { margin-left: 0; margin-top: 10px; }
-      .categories { padding: 40px 20px; gap: 30px; }
-    }
-  </style>
+/* FOOTER */
+footer { background:#111; padding:30px 20px; text-align:center; color:#777; border-top:1px solid #222; font-size:13px; }
+footer .socials { margin:10px 0; }
+footer .socials a { margin:0 10px; color:gold; font-weight:bold; transition:0.3s; }
+footer .socials a:hover { text-shadow:0 0 8px gold; }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  header { flex-direction:column; text-align:center; padding:30px 20px 20px; }
+  header .title { margin-left:0; margin-top:10px; }
+  .categories { padding:40px 20px; gap:25px; }
+}
+</style>
 </head>
 <body>
 
-  <!-- HEADER -->
-    <div class="header-icons">
-      <div style="position: relative;">
-        <i class="fa-solid fa-cart-shopping" id="cartBtn" title="Cart"></i>
-        <span id="cartCount" style="position:absolute; top:-8px; right:-10px; background:gold; color:#000; font-size:12px; font-weight:bold; padding:2px 6px; border-radius:50%;">0</span>
-      </div>
-      <i class="fa-solid fa-ellipsis-vertical" id="menuBtn" title="Menu"></i>
-    </div>
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
 
-  <header>
-    <div class="holder">
-      <img src="/logo/logo.png" alt="SAMURY Logo">
-      <div class="title">
-        <h1>SAMURY</h1>
-        <p>Luxury Modest Fashion — Crafted with Elegance</p>
-      </div>
-    </div>
-   
-  </header>
+<!-- HEADER ICONS -->
+<div class="header-icons">
+  <div style="position: relative;">
+    <i class="fa-solid fa-cart-shopping" id="cartBtn" title="Cart"></i>
+    <span id="cartCount" style="position:absolute; top:-8px; right:-10px; background:gold; color:#000; font-size:12px; font-weight:bold; padding:2px 6px; border-radius:50%;">0</span>
+  </div>
+  <i class="fa-solid fa-ellipsis-vertical" id="menuBtn" title="Menu"></i>
+</div>
 
-  <!-- SIDE MENU -->
-  <div class="side-menu" id="sideMenu">
-    <i class="fa-solid fa-x close-menu" id="closeMenu"></i>
-    <a href="#">Home</a>
-    <a href="/female-page/index.html">Female Shopping</a>
-    <a href="male.html">Male Shopping</a>
+<!-- HEADER -->
+<header>
+  <div class="holder">
+    <img src="/logo/logo.png" alt="SAMURY Logo">
+    <div class="title">
+      <h1>SAMURY</h1>
+      <p>Luxury Modest Fashion — Crafted with Elegance</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIDE MENU -->
+<div class="side-menu" id="sideMenu">
+  <i class="fa-solid fa-x close-menu" id="closeMenu"></i>
+  <a href="#">Home</a>
+  <a href="/female-page/index.html">Female Shopping</a>
+  <a href="/male page/index.html">Male Shopping</a>
+  <a href="https://wa.me/254112639083">WhatsApp</a>
+  <a href="https://instagram.com/samuryartelier">Instagram</a>
+  <a href="https://tiktok.com/@SAMURY">TikTok</a>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="category">
+    <h2>FEMALE SHOPPING</h2>
+    <p>Elegant abayas, dresses & modest wear designed for grace and confidence.</p>
+    <a href="/female-page/index.html">Shop Now</a>
+  </div>
+  <div class="category">
+    <h2>MALE SHOPPING</h2>
+    <p>Refined modest menswear combining tradition with modern luxury.</p>
+    <a href="/male page/index.html">Shop Now</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Shop via WhatsApp • Instagram • TikTok</p>
+  <div class="socials">
     <a href="https://wa.me/254112639083">WhatsApp</a>
     <a href="https://instagram.com/samuryartelier">Instagram</a>
     <a href="https://tiktok.com/@SAMURY">TikTok</a>
   </div>
+  <p style="margin-top:10px;">© 2026 SAMURY. All Rights Reserved.</p>
+</footer>
 
-  <!-- CATEGORIES -->
-  <section class="categories">
-    <div class="category">
-      <h2>FEMALE SHOPPING</h2>
-      <p>Elegant abayas, dresses & modest wear designed for grace and confidence.</p>
-      <a href="/female-page/index.html">Shop Now</a>
-    </div>
+<!-- JS -->
+<script>
+// Cart count from localStorage
+let cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+document.getElementById('cartCount').textContent = cart.length;
 
-    <div class="category">
-      <h2>MALE SHOPPING</h2>
-      <p>Refined modest menswear combining tradition with modern luxury.</p>
-      <a href="/male page/index.html">Shop Now</a>
-    </div>
-  </section>
+// Side Menu
+const sideMenu = document.getElementById('sideMenu');
+const overlay = document.getElementById('overlay');
+document.getElementById('menuBtn').addEventListener('click', () => {
+  sideMenu.classList.add('active');
+  overlay.style.display = 'block';
+});
+document.getElementById('closeMenu').addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Shop via WhatsApp • Instagram • TikTok</p>
-    <div class="socials">
-      <a href="https://wa.me/254112639083">WhatsApp</a>
-      <a href="https://instagram.com/samuryartelier">Instagram</a>
-      <a href="https://tiktok.com/@SAMURY">TikTok</a>
-    </div>
-    <p style="margin-top:10px;">© 2026 SAMURY. All Rights Reserved.</p>
-  </footer>
+function closeMenu() {
+  sideMenu.classList.remove('active');
+  overlay.style.display = 'none';
+}
 
-  <!-- JS -->
-  <script>
-    const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
-    document.getElementById('cartCount').textContent = cart.length;
-    // Side Menu
-    const sideMenu = document.getElementById('sideMenu');
-    document.getElementById('menuBtn').addEventListener('click', () => sideMenu.classList.add('active'));
-    document.getElementById('closeMenu').addEventListener('click', () => sideMenu.classList.remove('active'));
-
-    // Cart Logic
-    let cartItems = 0;
-    const cartCount = document.getElementById('cartCount');
-    document.getElementById('cartBtn').addEventListener('click', () => {
-      window.location.href = '/cart/index.html';
-    });
-
-    function addToCart() {
-      cartItems++;
-      cartCount.textContent = cartItems;
-    }
-
-  
-  </script>
+// Cart click
+document.getElementById('cartBtn').addEventListener('click', () => {
+  window.location.href = '/cart/index.html';
+});
+</script>
 
 </body>
 </html>
