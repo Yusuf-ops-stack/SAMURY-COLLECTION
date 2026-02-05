@@ -1,454 +1,726 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAMURY | Female Collection</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- FONTS -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMURY | Female Collection</title>
 
-  <style>
-    /* BODY */
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #000;
-      color: #fff;
-      overflow-x: hidden;
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-    button {
-      background-color:black;
-      color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* HEADER */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      padding: 20px 10px;
-      border-bottom: 1px solid #222;
-      position: relative;
-    }
-
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      color: gold;
-      letter-spacing: 2px;
-      margin: 1px 0 0;
-      font-size: 28px;
-      text-align: left;
-      padding-left: 15px;
-    }
-
-    .back-btn {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: gold;
-      color: #000;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .back-btn:hover { background: #fff; }
-
-    /* BANNER */
-    .banner {
-      background: url('https://images.unsplash.com/photo-1602810310070-8b8b2ee41f5a') center / cover no-repeat;
-      text-align: center;
-      padding: 60px 15px;
-      color: gold;
-    }
-
-    .banner h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px;
-      margin: 0;
-      letter-spacing: 1.5px;
-    }
-
-    .banner p {
-      font-family: 'Poppins', sans-serif;
-      margin-top: 8px;
-      font-size: 14px;
-      color: #fff;
-    }
-
-    /* FILTER SECTION */
-    .filter-section {
-      padding:20px;
-      text-align:center;
-      background:#111;
-      border-bottom:1px solid gold;
-    }
-    .filter-section input {
-      width: 80px;
-      padding:5px;
-      border-radius:5px;
-      border:1px solid gold;
-      margin-right:15px;
-      color:#fff;
-      background:#000;
-    }
-    .filter-section button {
-      padding:5px 12px;
-      border-radius:5px;
-      border:none;
-      font-weight:bold;
-      cursor:pointer;
-      margin-right:5px;
-    }
-
-    /* PRODUCTS GRID */
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      padding: 20px 10px;
-    }
-
-    .product {
-      background: #111;
-      border: 1px solid gold;
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .product.visible { opacity: 1; transform: translateY(0); }
-
-    .product:hover { transform: scale(1.03); box-shadow: 0 0 15px rgba(255,215,0,0.3); }
-
-    /* IMAGE */
-    .image-box {
-      position: relative;
-      overflow: hidden;
-      height: 350px;
-    }
-
-    .image-box img.product-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-
-    .product:hover .product-img { transform: scale(1.05); }
-
-    .image-box img.watermark {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      width: 50px;
-      height: 50px;
-      opacity: 1;
-      pointer-events: none;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.5);
-      padding: 6px;
-      object-fit: contain;
-      border: 2px solid gold;
-      box-shadow: 0 0 5px rgba(255,215,0,0.6);
-    }
-
-    /* PRODUCT DETAILS */
-    .product-details {
-      padding: 10px 5px;
-      text-align: center;
-    }
-
-    .product-details h3 {
-      font-family: 'Playfair Display', serif;
-      color: gold;
-      margin: 3px 0;
-      font-size: 16px;
-    }
-
-    .price { color: #ccc; font-size: 13px; margin-bottom: 8px; }
-
-    .product-details button {
-      display: inline-block;
-      padding: 6px 14px;
-      background: gold;
-      color: #000;
-      border: none;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-      margin: 2px 0;
-    }
-
-    .product-details button:hover { background: #fff; box-shadow: 0 0 6px gold; }
-
-    .cart-btn {
-      display: inline-block;
-      padding: 8px 18px;
-      background: transparent;
-      color: gold;
-      border: 1px solid gold;
-      border-radius: 30px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    .cart-btn:hover { background: gold; color: #000; }
-
-    /* POPUP */
-    .popup-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      padding: 10px;
-    }
-
-    .popup {
-      background: #111;
-      padding: 15px;
-      border: 1px solid gold;
-      border-radius: 16px;
-      text-align: center;
-      width: 100%;
-      max-width: 280px;
-    }
-
-    .popup h3 { font-size: 16px; margin-bottom: 12px; }
-    .popup button { padding: 8px; margin: 6px 0; border-radius: 12px; font-size: 14px; width: 100%; }
-    .popup button.whatsapp { background: #25D366; color: #fff; }
-    .popup button.instagram { background: #C13584; color: #fff; }
-    .popup button.tiktok { background: #69C9D0; color: #000; }
-    .popup button:hover { opacity: 0.9; }
-    .popup .close-btn { background: transparent; color: gold; border: 1px solid gold; font-size: 12px; margin-top:6px; }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 15px 10px;
-      font-size: 12px;
-      color: #777;
-      border-top: 1px solid #222;
-    }
-    footer a { color: gold; margin: 0 5px; text-decoration: none; }
-
-    /* RESPONSIVE */
-    @media (max-width: 600px) {
-      header h1 { font-size: 22px; padding-left: 10px; }
-      .banner h2 { font-size: 22px; }
-      .banner p { font-size: 12px; }
-      .image-box { height: 250px; }
-      .products { grid-template-columns: 1fr; gap: 12px; padding: 15px; }
-      .product-details h3 { font-size: 15px; }
-      .product-details button, .cart-btn { font-size: 11px; padding: 5px 12px; }
-      .filter-section input { width: 60px; padding: 4px; margin-right: 10px; }
-    }
-    button, .back-btn, .cart-btn, .product-img {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #000;
+  color: #fff;
   user-select: none;
 }
-/* Disable text selection on the whole page */
-body {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE10+/Edge */
-  user-select: none;         /* Standard */
+button { cursor: pointer; }
+
+/* --- HEADER --- */
+header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #222;
+}
+header h1 {
+  font-family: 'Playfair Display', serif;
+  color: gold;
+  letter-spacing: 2px;
+}
+.back-btn {
+  position: absolute;
+  left: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: gold;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
 }
 
-  </style>
+/* --- PRODUCTS GRID --- */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+/* --- PRODUCT CARD --- */
+.product {
+  background: #111;
+  border: 1px solid gold;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.product:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(255,215,0,0.3);
+}
+
+/* --- IMAGE/VIDEO BOX --- */
+.image-box {
+  position: relative;
+  height: 320px;
+  cursor: pointer;
+}
+.product-img,
+.product-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+.product-video { opacity: 0; }
+.product:hover .product-video { opacity: 1; }
+.product:hover .product-img { opacity: 0; }
+
+/* --- PLAY ICON --- */
+.play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: gold;
+  background: rgba(0,0,0,0.3);
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+/* --- WATERMARK --- */
+.watermark {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  color: rgba(255,215,0,0.4);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* --- INFO & LIKE BUTTONS --- */
+.info-btn, .like-btn {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.7);
+  color: gold;
+  border: 1px solid gold;
+  z-index: 5;
+}
+.info-btn { top: 10px; right: 10px; }
+.like-btn { top: 10px; left: 10px; }
+
+/* --- PRODUCT DETAILS --- */
+.product-details {
+  padding: 10px;
+  text-align: center;
+}
+.product-details h3 { color: gold; font-family: 'Playfair Display', serif; font-size: 16px; }
+.price { font-size: 13px; color: #ccc; }
+.buy-now, .cart-btn {
+  border-radius: 20px;
+  padding: 6px 14px;
+  margin: 5px 0;
+  border: none;
+}
+.buy-now { background: gold; color: #000; }
+.cart-btn { background: transparent; color: gold; border: 1px solid gold; }
+
+/* --- MODAL --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.modal {
+  background: #111;
+  border: 1px solid gold;
+  border-radius: 16px;
+  padding: 15px;
+  width: 95%;
+  max-width: 450px;
+  text-align: center;
+  position: relative;
+}
+.modal h3 { color: gold; font-family: 'Playfair Display', serif; }
+.modal p { font-size: 13px; color: #ccc; margin: 5px 0; }
+.modal button { margin-top: 10px; padding: 8px; width: 100%; border-radius: 12px; border: none; font-weight: bold; }
+
+/* --- MODAL CAROUSEL --- */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.carousel img,
+.carousel video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.carousel img.active,
+.carousel video.active {
+  display: block;
+}
+.carousel button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: gold;
+  font-size: 24px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.carousel .prev { left: 5px; }
+.carousel .next { right: 5px; }
+
+footer { text-align: center; font-size: 12px; color: #777; padding: 15px; border-top: 1px solid #222; }
+
+/* --- LIKE BUTTON POP ANIMATION --- */
+.like-btn i {
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+.like-btn.unliked i { color: gold; }
+.like-btn.liked i {
+  animation: pop-bounce 0.4s forwards;
+  color: gold;
+}
+@keyframes pop-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+  70% { transform: scale(1.3); }
+  100% { transform: scale(1.4); }
+}
+.quantity-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0;
+  gap: 5px;
+}
+
+.qty-input {
+  width: 40px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid gold;
+  background: #111;
+  color: gold;
+}
+
+.qty-plus, .qty-minus {
+  background: gold;
+  border: none;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.size-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 14px;
+  color: gold;
+}
+
+.size-select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid gold;
+  background: #111;
+  color: gold;
+}
+.buy-now-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+.buy-now-modal {
+  background: #111;
+  border: 1px solid gold;
+  border-radius: 16px;
+  padding: 20px;
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+}
+.buy-now-modal h3 {
+  color: gold;
+  margin-bottom: 15px;
+}
+.buy-now-modal button {
+  display: block;
+  width: 80%;
+  margin: 8px auto;
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  background: gold;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+.buy-now-modal button:hover {
+  background: #ffc107;
+}
+
+</style>
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <button class="back-btn" onclick="window.location.href='/homepage/index.html'">
-      <i class="fa-solid fa-circle-left"></i>
-    </button>
-    <h1>FEMALE COLLECTION</h1>
-  </header>
+<header>
+  <button class="back-btn" onclick="window.location.href='/homepage/index.html'">
+    <i class="fa-solid fa-circle-left"></i>
+  </button>
+  <h1>FEMALE COLLECTION</h1>
+</header>
 
-  <!-- FILTER -->
-  <section class="filter-section">
-    <label for="minPrice">Min Price (KES): </label>
-    <input type="number" id="minPrice" placeholder="0">
-    <label for="maxPrice">Max Price (KES): </label>
-    <input type="number" id="maxPrice" placeholder="10000">
-    <button onclick="filterByPrice()">Filter</button>
-    <button onclick="resetFilter()">Reset</button>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section class="products">
-    <div class="product" data-name="Luxury Black Abaya">
-      <div class="image-box">
-        <img src="/pics/WhatsApp Image 2026-02-03 at 16.53.56.jpeg" class="product-img" alt="Luxury Black Abaya">
-        <img src="/pics/image.png" class="watermark" alt="SAMURY">
-      </div>
-      <div class="product-details">
-        <h3>Luxury Black Abaya</h3>
-        <p class="price">KES 6,500</p>
-        <button class="buy-now">Buy Now</button>
-        <button class="cart-btn" onclick="addToCart('Luxury Black Abaya')">Add to Cart</button>
-      </div>
+<section class="products">
+  <!-- PRODUCT CARD TEMPLATE -->
+  <div class="product" data-name="Luxury Black Abaya">
+    <div class="image-box">
+      <button class="info-btn"><i class="fa-solid fa-info"></i></button>
+      <button class="like-btn"><i class="fa-regular fa-heart"></i></button>
+      <img class="product-img" src="/pics/WhatsApp Image 2026-02-03 at 16.53.56.jpeg" loading="lazy">
+      <video class="product-video" src="/videos/all.mp4" muted loop playsinline></video>
+      <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+      <div class="watermark">SAMURY</div>
     </div>
+    <div class="product-details">
+      <h3>Luxury Black Abaya</h3>
+      <p class="price">KES 6,500</p>
+       <!-- Quantity selector -->
+  <div class="quantity-container">
+    <button class="qty-minus">-</button>
+    <input type="number" class="qty-input" value="1" min="1">
+    <button class="qty-plus">+</button>
+  </div>
+  <!-- Size selector -->
+<div class="size-container">
+  <label for="size">Size:</label>
+  <select class="size-select">
+    <option value="S">S</option>
+    <option value="M" selected>M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+  </select>
+</div>
 
-    <div class="product" data-name="Gold Trim Modest Dress">
-      <div class="image-box">
-        <img src="/pics/WhatsApp Image 2026-02-03 at 16.53.58.jpeg" class="product-img" alt="Gold Trim Dress">
-        <img src="/pics/image.png" class="watermark" alt="SAMURY">
-      </div>
-      <div class="product-details">
-        <h3>Gold Trim Modest Dress</h3>
-        <p class="price">KES 7,200</p>
-        <button class="buy-now">Buy Now</button>
-        <button class="cart-btn" onclick="addToCart('Gold Trim Modest Dress')">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="product" data-name="Elegant Kimono Abaya">
-      <div class="image-box">
-        <img src="/pics/WhatsApp Image 2026-02-03 at 16.53.58 (1).jpeg" class="product-img" alt="Elegant Kimono">
-        <img src="/pics/image.png" class="watermark" alt="SAMURY">
-      </div>
-      <div class="product-details">
-        <h3>Elegant Kimono Abaya</h3>
-        <p class="price">KES 8,000</p>
-        <button class="buy-now">Buy Now</button>
-        <button class="cart-btn" onclick="addToCart('Elegant Kimono Abaya')">Add to Cart</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- POPUP -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup">
-      <h3>Select Platform</h3>
-      <button class="whatsapp">WhatsApp</button>
-      <button class="instagram">Instagram</button>
-      <button class="tiktok">TikTok</button>
-      <button class="close-btn">Cancel</button>
+      <button class="buy-now">Buy Now</button>
+      <button class="cart-btn">Add to Cart</button>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    © 2026 SAMURY — Female Collection
-    <br>
-    <a href="https://wa.me/254112639083">WhatsApp</a> |
-    <a href="https://instagram.com/samuryartelier">Instagram</a> |
-    <a href="https://tiktok.com/@SAMURY">TikTok</a>
-  </footer>
+  <div class="product" data-name="Gold Trim Modest Dress">
+    <div class="image-box">
+      <button class="info-btn"><i class="fa-solid fa-info"></i></button>
+      <button class="like-btn"><i class="fa-regular fa-heart"></i></button>
+      <img class="product-img" src="/pics/WhatsApp Image 2026-02-03 at 16.53.58.jpeg" loading="lazy">
+      <video class="product-video" src="/videos/Mayah Abayah in soft creme. Masha’Allah so pretty🥹 Dm to PRE-ORDER.mp4" muted loop playsinline></video>
+      <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+      <div class="watermark">SAMURY</div>
+    </div>
+    <div class="product-details">
+      <h3>Gold Trim Modest Dress</h3>
+      <p class="price">KES 7,200</p>
+       <!-- Quantity selector -->
+  <div class="quantity-container">
+    <button class="qty-minus">-</button>
+    <input type="number" class="qty-input" value="1" min="1">
+    <button class="qty-plus">+</button>
+  </div>
+  <!-- Size selector -->
+<div class="size-container">
+  <label for="size">Size:</label>
+  <select class="size-select">
+    <option value="S">S</option>
+    <option value="M" selected>M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+  </select>
+</div>
 
-  <!-- JS -->
-  <script>
-    const products = document.querySelectorAll('.product');
-    const popupOverlay = document.getElementById('popupOverlay');
-    let currentProduct = '';
+      <button class="buy-now">Buy Now</button>
+      <button class="cart-btn">Add to Cart</button>
+    </div>
+  </div>
 
-    document.querySelectorAll('.buy-now').forEach(button => {
-      button.addEventListener('click', (e) => {
-        currentProduct = e.target.closest('.product').dataset.name;
-        popupOverlay.style.display = 'flex';
-      });
-    });
+  <div class="product" data-name="Elegant Kimono Abaya">
+    <div class="image-box">
+      <button class="info-btn"><i class="fa-solid fa-info"></i></button>
+      <button class="like-btn"><i class="fa-regular fa-heart"></i></button>
+      <img class="product-img" src="/pics/WhatsApp Image 2026-02-03 at 16.53.58 (1).jpeg" loading="lazy">
+      <video class="product-video" src="/videos/dida fashion.mp4" muted loop playsinline></video>
+      <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+      <div class="watermark">SAMURY</div>
+    </div>
+    <div class="product-details">
+      <h3>Elegant Kimono Abaya</h3>
+      <p class="price">KES 8,000</p>
+       <!-- Quantity selector -->
+  <div class="quantity-container">
+    <button class="qty-minus">-</button>
+    <input type="number" class="qty-input" value="1" min="1">
+    <button class="qty-plus">+</button>
+  </div>
+  <!-- Size selector -->
+<div class="size-container">
+  <label for="size">Size:</label>
+  <select class="size-select">
+    <option value="S">S</option>
+    <option value="M" selected>M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+  </select>
+</div>
 
-    document.querySelector('.close-btn').addEventListener('click', () => {
-      popupOverlay.style.display = 'none';
-    });
+      <button class="buy-now">Buy Now</button>
+      <button class="cart-btn">Add to Cart</button>
+    </div>
+  </div>
+</section>
 
-    document.querySelector('.whatsapp').addEventListener('click', () => {
-      const msg = encodeURIComponent(`Hello SAMURY, I would like to order the ${currentProduct}.`);
-      window.open(`https://wa.me/254112639083?text=${msg}`, '_blank');
-      popupOverlay.style.display = 'none';
-    });
+<!-- BUY NOW OPTIONS MODAL -->
+<div class="buy-now-modal-overlay" id="buyNowModal">
+  <div class="buy-now-modal">
+    <h3>Order via:</h3>
+    <button class="buy-option" data-platform="instagram">Instagram</button>
+    <button class="buy-option" data-platform="whatsapp">WhatsApp</button>
+    <button class="buy-option" data-platform="tiktok">TikTok</button>
+    <button onclick="closeBuyNowModal()" style="margin-top:10px;">Cancel</button>
+  </div>
+</div>
 
-    document.querySelector('.instagram').addEventListener('click', () => {
-      window.open('https://www.instagram.com/samuryartelier', '_blank');
-      popupOverlay.style.display = 'none';
-    });
 
-    document.querySelector('.tiktok').addEventListener('click', () => {
-      window.open('https://www.tiktok.com/@SAMURY', '_blank');
-      popupOverlay.style.display = 'none';
-    });
+<footer>© 2026 SAMURY — Female Collection</footer>
 
-    // Animate products on scroll
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.2 });
-    products.forEach(product => observer.observe(product));
+<script>
+// --- PRODUCT INFO ---
+const productInfo = {
+  "Luxury Black Abaya": {
+    desc: "A timeless luxury abaya designed for elegance.",
+    fabric: "Premium Nida", sizes: "S, M, L, XL", care: "Gentle wash",
+    media: ["/pics/WhatsApp Image 2026-02-03 at 16.53.56.jpeg","/videos/all.mp4"]
+  },
+  "Gold Trim Modest Dress": {
+    desc: "Elegant modest dress with gold detailing.",
+    fabric: "Soft Crepe", sizes: "M, L, XL", care: "Dry clean recommended",
+    media: ["/pics/WhatsApp Image 2026-02-03 at 16.53.58.jpeg","/videos/Mayah Abayah in soft creme. Masha’Allah so pretty🥹 Dm to PRE-ORDER.mp4"]
+  },
+  "Elegant Kimono Abaya": {
+    desc: "Flowy kimono abaya with modern cut.",
+    fabric: "Silk Blend", sizes: "Free Size", care: "Cold wash only",
+    media: ["/pics/WhatsApp Image 2026-02-03 at 16.53.58 (1).jpeg","/videos/dida fashion.mp4"]
+  }
+};
 
-    // CART FUNCTION
-    function addToCart(itemName) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      let existing = cart.find(item => item.name === itemName);
+const buyNowModal = document.getElementById('buyNowModal');
+let selectedProduct = null;
 
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        let price = 0;
-        switch(itemName) {
-          case "Luxury Black Abaya": price = 6500; break;
-          case "Gold Trim Modest Dress": price = 7200; break;
-          case "Elegant Kimono Abaya": price = 8000; break;
-          default: price = 0;
-        }
-        cart.push({ name: itemName, qty: 1, price: price });
-      }
+// Open modal on Buy Now click
+document.querySelectorAll('.buy-now').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    selectedProduct = btn.closest('.product');
+    buyNowModal.style.display = 'flex';
+  });
+});
 
-      localStorage.setItem("cart", JSON.stringify(cart));
-      if(confirm(itemName + " added to cart. View cart?")) {
-        window.location.href = '/cart/index.html';
-      }
+// Close modal
+function closeBuyNowModal() {
+  buyNowModal.style.display = 'none';
+}
+
+// --- Handle platform selection with pre-filled order message ---
+document.querySelectorAll('.buy-option').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!selectedProduct) return;
+
+    const name = selectedProduct.dataset.name;
+    const qty = selectedProduct.querySelector('.qty-input').value;
+    const size = selectedProduct.querySelector('.size-select').value;
+
+    // --- Friendly WhatsApp message ---
+    const message = `Hello SAMURY! ✨
+I’m interested in ordering: "${name}" 👗
+Quantity: ${qty}
+Size: ${size}
+
+Could you please confirm availability and the next steps? Thank you! 💛`;
+
+    const platform = btn.dataset.platform;
+    switch (platform) {
+      case 'instagram':
+        window.open(`https://www.instagram.com/direct/t/samuryartelier?text=${encodeURIComponent(message)}`, '_blank');
+        break;
+      case 'whatsapp':
+        window.open(`https://wa.me/254702378716?text=${encodeURIComponent(message)}`, '_blank');
+        break;
+      case 'tiktok':
+        window.open(`https://www.tiktok.com/@SAMURY`, '_blank');
+        break;
     }
 
-    // FILTER FUNCTION
-    function filterByPrice() {
-      const min = parseInt(document.getElementById('minPrice').value) || 0;
-      const max = parseInt(document.getElementById('maxPrice').value) || Infinity;
+    closeBuyNowModal();
+  });
+});
+// --- OPEN MODAL ---
+function openModal(name){
+  const info = productInfo[name];
+  modalTitle.textContent = name;
+  modalDesc.textContent = info.desc;
+  modalFabric.textContent = info.fabric;
+  modalSizes.textContent = info.sizes;
+  modalCare.textContent = info.care;
 
-      products.forEach(product => {
-        const priceText = product.querySelector('.price').textContent;
-        const price = parseInt(priceText.replace(/[^0-9]/g, ''));
-        product.style.display = (price >= min && price <= max) ? 'flex' : 'none';
-      });
+  // clear old media
+  carousel.querySelectorAll('img, video').forEach(el=>el.remove());
+
+  currentIndex = 0;
+
+  info.media.forEach((src,i)=>{
+    let el;
+    if(src.endsWith('.mp4')){
+      el = document.createElement('video');
+      el.src = encodeURI(src);
+      el.controls = true;
+      el.muted = true;
+      el.loop = true;
+      el.playsInline = true;
+      if(i===0) el.autoplay = true;
+    } else {
+      el = document.createElement('img');
+      el.src = encodeURI(src);
+    }
+    if(i===0) el.classList.add('active');
+    carousel.appendChild(el);
+  });
+
+  modalOverlay.style.display = 'flex';
+}
+
+// --- CAROUSEL NAV ---
+carousel.querySelector('.prev').addEventListener('click',()=>changeMedia(-1));
+carousel.querySelector('.next').addEventListener('click',()=>changeMedia(1));
+
+function changeMedia(dir){
+  const items = carousel.querySelectorAll('img, video');
+  if(items[currentIndex].tagName==='VIDEO') items[currentIndex].pause();
+  items[currentIndex].classList.remove('active');
+  currentIndex = (currentIndex + dir + items.length) % items.length;
+  items[currentIndex].classList.add('active');
+  if(items[currentIndex].tagName==='VIDEO') items[currentIndex].play();
+}
+
+// --- CLOSE MODAL ---
+function closeModal(){
+  const items = carousel.querySelectorAll('video');
+  items.forEach(v=>v.pause());
+  modalOverlay.style.display = 'none';
+}
+
+// --- PRODUCT CARD BUTTONS ---
+document.querySelectorAll('.product .info-btn').forEach(btn=>{
+  btn.addEventListener('click', e=>{
+    e.stopPropagation();
+    openModal(btn.closest('.product').dataset.name);
+  });
+});
+
+// --- LIKE BUTTONS ---
+document.querySelectorAll('.product .like-btn').forEach(btn=>{
+  const name = btn.closest('.product').dataset.name;
+  const savedLikes = JSON.parse(localStorage.getItem('likedProducts')||'{}');
+
+  if(savedLikes[name]){
+    btn.classList.add('liked');
+    btn.innerHTML = '<i class="fa-solid fa-heart"></i>';
+  } else {
+    btn.classList.add('unliked');
+    btn.innerHTML = '<i class="fa-regular fa-heart"></i>';
+  }
+
+  btn.addEventListener('click', e=>{
+    e.stopPropagation();
+    const isLiked = btn.classList.contains('liked');
+    if(isLiked){
+      btn.classList.remove('liked');
+      btn.classList.add('unliked');
+      btn.innerHTML = '<i class="fa-regular fa-heart"></i>';
+    } else {
+      btn.classList.remove('unliked');
+      btn.classList.add('liked');
+      btn.innerHTML = '<i class="fa-solid fa-heart"></i>';
+    }
+    const savedLikes = JSON.parse(localStorage.getItem('likedProducts')||'{}');
+    savedLikes[name] = !isLiked;
+    localStorage.setItem('likedProducts',JSON.stringify(savedLikes));
+  });
+});
+
+// --- PRODUCT CARD VIDEO PLAY ---
+document.querySelectorAll('.product .image-box').forEach(box=>{
+  const video = box.querySelector('video');
+  box.addEventListener('click', ()=>{
+    if(video.paused){ video.play(); video.muted=false; }
+    else video.pause();
+  });
+});
+
+// --- ADD TO CART FUNCTIONALITY ---
+document.querySelectorAll('.cart-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+
+    const productEl = btn.closest('.product');
+    const name = productEl.dataset.name;
+    const priceText = productEl.querySelector('.price').textContent;
+    const img = productEl.querySelector('.product-img').src;
+    const qty = parseInt(productEl.querySelector('.qty-input').value);
+    const size = productEl.querySelector('.size-select').value; // NEW
+
+    const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // Check if product + size already exists in cart
+    const existingIndex = cart.findIndex(item => item.name === name && item.size === size);
+    if(existingIndex > -1){
+      cart[existingIndex].qty += qty;
+    } else {
+      cart.push({ name, price, img, qty, size }); // include size
     }
 
-    function resetFilter() {
-      document.getElementById('minPrice').value = '';
-      document.getElementById('maxPrice').value = '';
-      products.forEach(product => product.style.display = 'flex');
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    alert(`${qty} x ${name} (Size: ${size}) added to cart!`);
+  });
+});
+
+
+// --- AUTO-PAUSE VIDEO WHEN OUT OF VIEW ---
+const productVideos = document.querySelectorAll('.product .product-video');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const video = entry.target;
+    if(entry.isIntersecting){
+      // video is in viewport, do nothing
+    } else {
+      // video is out of viewport, pause it
+      if(!video.paused) video.pause();
     }
-  </script>
+  });
+}, {
+  threshold: 0.5 // triggers when 50% of video is visible
+});
+
+// observe all product videos
+productVideos.forEach(video => observer.observe(video));
+
+// --- QUANTITY BUTTONS ---
+document.querySelectorAll('.product').forEach(product => {
+  const minusBtn = product.querySelector('.qty-minus');
+  const plusBtn = product.querySelector('.qty-plus');
+  const qtyInput = product.querySelector('.qty-input');
+
+  minusBtn.addEventListener('click', () => {
+    let current = parseInt(qtyInput.value);
+    if(current > 1) qtyInput.value = current - 1;
+  });
+
+  plusBtn.addEventListener('click', () => {
+    let current = parseInt(qtyInput.value);
+    qtyInput.value = current + 1;
+  });
+});
+function scrollToProductFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const productName = params.get('name');
+  if (!productName) return;
+
+  // Find product div with matching data-name
+  const productEl = Array.from(document.querySelectorAll('.product'))
+    .find(p => p.dataset.name === productName);
+  
+  if (productEl) {
+    productEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    productEl.style.border = '2px solid gold';
+    productEl.style.boxShadow = '0 0 20px rgba(255,215,0,0.7)';
+    setTimeout(() => {
+      productEl.style.border = '';
+      productEl.style.boxShadow = '';
+    }, 2500);
+  }
+}
+
+// Run on page load
+window.addEventListener('DOMContentLoaded', scrollToProductFromURL);
+
+// --- BUY NOW FUNCTIONALITY ---
+document.querySelectorAll('.buy-now').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+
+    const productEl = btn.closest('.product');
+    const name = productEl.dataset.name;
+    const priceText = productEl.querySelector('.price').textContent;
+    const img = productEl.querySelector('.product-img').src;
+    const qty = parseInt(productEl.querySelector('.qty-input').value);
+    const size = productEl.querySelector('.size-select').value;
+
+    const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // Check if product + size already exists in cart
+    const existingIndex = cart.findIndex(item => item.name === name && item.size === size);
+    if(existingIndex > -1){
+      cart[existingIndex].qty += qty;
+    } else {
+      cart.push({ name, price, img, qty, size });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Redirect to checkout page (replace with your checkout URL)
+    window.location.href = '/checkout.html';
+  });
+});
+
+</script>
 
 </body>
 </html>

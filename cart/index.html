@@ -12,31 +12,29 @@ body {
   background: #000;
   color: #fff;
 }
-  .back-btn {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: gold;
-      color: #000;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+.back-btn {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: gold;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
 header {
-  position: relative; /* ADD THIS */
+  position: relative;
   text-align: center;
   padding: 30px 20px;
   border-bottom: 1px solid #222;
 }
-
-
 header h1 {
   color: gold;
   letter-spacing: 3px;
@@ -57,6 +55,7 @@ header h1 {
   border-radius: 14px;
   padding: 18px;
   margin-bottom: 20px;
+  gap: 10px;
 }
 
 .cart-item h3 {
@@ -70,17 +69,33 @@ header h1 {
   font-size: 14px;
 }
 
-.remove-btn {
+.cart-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.remove-btn, .view-btn {
   background: transparent;
   border: 1px solid red;
   color: red;
-  padding: 8px 18px;
+  padding: 8px 12px;
   border-radius: 20px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.view-btn {
+  border-color: gold;
+  color: gold;
 }
 
 .remove-btn:hover {
   background: red;
+  color: #000;
+}
+
+.view-btn:hover {
+  background: gold;
   color: #000;
 }
 
@@ -122,16 +137,14 @@ header h1 {
 <body>
 
 <header>
-    <button class="back-btn" onclick="window.location.href='/homepage/index.html'">
-  <i class="fas fa-arrow-left"></i> Back
-</button>
+  <button class="back-btn" onclick="window.location.href='/homepage/index.html'">
+    <i class="fas fa-arrow-left"></i> Back
+  </button>
   <h1>YOUR CART</h1>
 </header>
 
 <div class="cart-container" id="cart"></div>
-
 <div class="total" id="total"></div>
-
 <div class="checkout" id="checkout"></div>
 
 <script>
@@ -160,9 +173,18 @@ function renderCart() {
       <div class="cart-item">
         <div>
           <h3>${item.name}</h3>
+          <p>Size: ${item.size}</p>
           <p>Quantity: ${item.qty}</p>
+          <p>Price: KES ${item.price}</p>
         </div>
-        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+        <div class="cart-actions">
+          <button class="view-btn" onclick="viewProduct('${encodeURIComponent(item.name)}')">
+            <i class="fas fa-eye"></i> View
+          </button>
+          <button class="remove-btn" onclick="removeItem(${index})">
+            <i class="fas fa-trash"></i> Remove
+          </button>
+        </div>
       </div>
     `;
   });
@@ -183,10 +205,17 @@ function removeItem(index) {
 function checkout() {
   let message = "Hello SAMURY, I would like to order:%0A";
   cart.forEach(item => {
-    message += `- ${item.name} (Qty: ${item.qty})%0A`;
+    message += `- ${item.name} (Size: ${item.size}, Qty: ${item.qty})%0A`;
   });
+  window.open(`https://wa.me/254702378716?text=${message}`, "_blank");
+}
 
-  window.open(`https://wa.me/254112639083?text=${message}`, "_blank");
+// Redirect to product page
+function viewProduct(name) {
+  // Encode the product name to safely include in URL
+  const productName = encodeURIComponent(name);
+  // Redirect to product page (update the URL if your product page is different)
+  window.location.href = `/female-page/index.html?name=${productName}`;
 }
 
 renderCart();

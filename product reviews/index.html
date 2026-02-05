@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMURY | Product Reviews</title>
+
+<!-- Google Fonts & Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+
+  header {
+    background-color: #ff6f61;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+    color: #ff6f61;
+  }
+
+  .average-rating {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .sort-options {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+
+  .sort-options select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+
+  .product-review {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+
+  .product-review h3 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+  }
+
+  .review-stars {
+    color: #ffb400;
+    margin-bottom: 10px;
+  }
+
+  .review-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .reviewer {
+    font-size: 14px;
+    color: #777;
+  }
+
+  /* Add Review Button */
+  .add-review-btn {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .add-review-btn:hover {
+    background-color: #e65c50;
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+  }
+
+  .modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    position: relative;
+  }
+
+  .modal-content input, .modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+
+  .modal-content button {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .modal-content button:hover {
+    background-color: #e65c50;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>SAMURY | Product Reviews</h1>
+</header>
+
+<div class="container">
+  <h2>Elegant Summer Dress</h2>
+
+  <div class="average-rating" id="averageRating">Average Rating: ⭐⭐⭐⭐☆ (4.5)</div>
+
+  <div class="sort-options">
+    <label for="sort">Sort by: </label>
+    <select id="sort" onchange="sortReviews()">
+      <option value="newest">Newest</option>
+      <option value="highest">Highest Rating</option>
+    </select>
+  </div>
+
+  <button class="add-review-btn" onclick="openModal()">Add Review</button>
+
+  <!-- Reviews List -->
+  <div id="reviews">
+    <div class="product-review" data-rating="5" data-time="1686000000000">
+      <h3>Beautiful Dress!</h3>
+      <div class="review-stars">⭐⭐⭐⭐⭐</div>
+      <p class="review-text">The fabric is amazing and fits perfectly. Highly recommend!</p>
+      <div class="reviewer">– Amina K.</div>
+    </div>
+
+    <div class="product-review" data-rating="3" data-time="1685900000000">
+      <h3>Nice, but a bit tight</h3>
+      <div class="review-stars">⭐⭐⭐</div>
+      <p class="review-text">Lovely design, but order one size up.</p>
+      <div class="reviewer">– Fatuma M.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Adding Review -->
+<div id="reviewModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Add Your Review</h3>
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="number" id="rating" placeholder="Rating (1-5)" min="1" max="5">
+    <textarea id="review" rows="4" placeholder="Write your review..."></textarea>
+    <button onclick="addReview()">Submit Review</button>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('reviewModal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('reviewModal').style.display = 'none';
+  }
+
+  function addReview() {
+    const name = document.getElementById('name').value.trim();
+    const rating = parseInt(document.getElementById('rating').value);
+    const reviewText = document.getElementById('review').value.trim();
+
+    if (!name || !rating || !reviewText || rating < 1 || rating > 5) {
+      alert("Please fill all fields with valid data.");
+      return;
+    }
+
+    const reviewsDiv = document.getElementById('reviews');
+
+    const time = Date.now();
+    const reviewDiv = document.createElement('div');
+    reviewDiv.className = 'product-review';
+    reviewDiv.setAttribute('data-rating', rating);
+    reviewDiv.setAttribute('data-time', time);
+    reviewDiv.innerHTML = `
+      <h3>New Review</h3>
+      <div class="review-stars">${'⭐'.repeat(rating)}</div>
+      <p class="review-text">${reviewText}</p>
+      <div class="reviewer">– ${name}</div>
+    `;
+
+    reviewsDiv.prepend(reviewDiv); // Add new review on top
+
+    // Clear modal form
+    document.getElementById('name').value = '';
+    document.getElementById('rating').value = '';
+    document.getElementById('review').value = '';
+    closeModal();
+
+    updateAverage();
+  }
+
+  function updateAverage() {
+    const reviews = document.querySelectorAll('#reviews .product-review');
+    let total = 0;
+    reviews.forEach(r => total += parseInt(r.getAttribute('data-rating')));
+    const avg = (total / reviews.length).toFixed(1);
+    const fullStars = Math.floor(avg);
+    const halfStar = avg - fullStars >= 0.5 ? '⭐' : '';
+    document.getElementById('averageRating').innerHTML = `Average Rating: ${'⭐'.repeat(fullStars)}${halfStar}${'☆'.repeat(5 - Math.ceil(avg))} (${avg})`;
+  }
+
+  function sortReviews() {
+    const sortBy = document.getElementById('sort').value;
+    const reviewsDiv = document.getElementById('reviews');
+    const reviews = Array.from(reviewsDiv.children);
+
+    if (sortBy === 'newest') {
+      reviews.sort((a,b) => b.getAttribute('data-time') - a.getAttribute('data-time'));
+    } else if (sortBy === 'highest') {
+      reviews.sort((a,b) => b.getAttribute('data-rating') - a.getAttribute('data-rating'));
+    }
+
+    reviews.forEach(r => reviewsDiv.appendChild(r));
+  }
+
+  // Initialize average rating
+  updateAverage();
+
+  // Close modal on click outside
+  window.onclick = function(event) {
+    const modal = document.getElementById('reviewModal');
+    if (event.target == modal) {
+      closeModal();
+    }
+  }
+</script>
+</body>
+</html>
