@@ -424,6 +424,23 @@ footer { text-align: center; font-size: 12px; color: #777; padding: 15px; border
     <button onclick="closeBuyNowModal()" style="margin-top:10px;">Cancel</button>
   </div>
 </div>
+<!-- PRODUCT INFO MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+    <p id="modalFabric"></p>
+    <p id="modalSizes"></p>
+    <p id="modalCare"></p>
+
+    <div class="carousel">
+      <button class="prev">&lt;</button>
+      <button class="next">&gt;</button>
+    </div>
+
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
 
 
 <footer>© 2026 SAMURY — Female Collection</footer>
@@ -501,18 +518,22 @@ Could you please confirm availability and the next steps? Thank you! 💛`;
 // --- OPEN MODAL ---
 function openModal(name){
   const info = productInfo[name];
-  modalTitle.textContent = name;
-  modalDesc.textContent = info.desc;
-  modalFabric.textContent = info.fabric;
-  modalSizes.textContent = info.sizes;
-  modalCare.textContent = info.care;
+  
+  const modalOverlay = document.getElementById('modalOverlay');
+
+  // SELECT carousel inside the modal
+  const carousel = modalOverlay.querySelector('.carousel');
+
+  // Ensure carousel exists
+  if(!carousel) return console.error('Carousel element not found!');
 
   // clear old media
-  carousel.querySelectorAll('img, video').forEach(el=>el.remove());
+  carousel.querySelectorAll('img, video').forEach(el => el.remove());
 
-  currentIndex = 0;
+  let currentIndex = 0;
+  const items = [];
 
-  info.media.forEach((src,i)=>{
+  info.media.forEach((src, i) => {
     let el;
     if(src.endsWith('.mp4')){
       el = document.createElement('video');
@@ -521,37 +542,118 @@ function openModal(name){
       el.muted = true;
       el.loop = true;
       el.playsInline = true;
-      if(i===0) el.autoplay = true;
     } else {
       el = document.createElement('img');
       el.src = encodeURI(src);
     }
     if(i===0) el.classList.add('active');
     carousel.appendChild(el);
+    items.push(el);
   });
+
+  // NAVIGATION BUTTONS
+  const prevBtn = carousel.querySelector('.prev');
+  const nextBtn = carousel.querySelector('.next');
+
+  prevBtn.onclick = () => changeMedia(-1);
+  nextBtn.onclick = () => changeMedia(1);
+
+  function changeMedia(dir){
+    if(items[currentIndex].tagName==='VIDEO') items[currentIndex].pause();
+    items[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + dir + items.length) % items.length;
+    items[currentIndex].classList.add('active');
+    if(items[currentIndex].tagName==='VIDEO') items[currentIndex].play();
+  }
 
   modalOverlay.style.display = 'flex';
 }
 
-// --- CAROUSEL NAV ---
-carousel.querySelector('.prev').addEventListener('click',()=>changeMedia(-1));
-carousel.querySelector('.next').addEventListener('click',()=>changeMedia(1));
+// --- PRODUCT INFO MODAL ---
+const modalOverlay = document.getElementById('modalOverlay');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalFabric = document.getElementById('modalFabric');
+const modalSizes = document.getElementById('modalSizes');
+const modalCare = document.getElementById('modalCare');
+let currentIndex = 0;
+let carouselItems = [];
 
-function changeMedia(dir){
-  const items = carousel.querySelectorAll('img, video');
-  if(items[currentIndex].tagName==='VIDEO') items[currentIndex].pause();
-  items[currentIndex].classList.remove('active');
-  currentIndex = (currentIndex + dir + items.length) % items.length;
-  items[currentIndex].classList.add('active');
-  if(items[currentIndex].tagName==='VIDEO') items[currentIndex].play();
+document.querySelectorAll('.product .info-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const name = btn.closest('.product').dataset.name;
+    const info = productInfo[name];
+
+    modalTitle.textContent = name;
+    modalDesc.textContent = info.desc;
+    modalFabric.textContent = `Fabric: ${info.fabric}`;
+    modalSizes.textContent = `Sizes: ${info.sizes}`;
+    modalCare.textContent = `Care: ${info.care}`;
+
+    const carousel = modalOverlay.querySelector('.carousel');
+    // Clear previous media
+    carousel.querySelectorAll('img, video').forEach(el => el.remove());
+    currentIndex = 0;
+    carouselItems = [];
+
+    // Add media
+    info.media.forEach((src, i) => {
+      let el;
+      if (src.endsWith('.mp4')) {
+        el = document.createElement('video');
+        el.src = encodeURI(src);
+        el.controls = true;
+        el.muted = true;
+        el.loop = true;
+        el.playsInline = true;
+      } else {
+        el = document.createElement('img');
+        el.src = encodeURI(src);
+      }
+      if (i === 0) el.classList.add('active');
+      carousel.appendChild(el);
+      carouselItems.push(el);
+    });
+
+    // Carousel nav buttons
+    const prevBtn = carousel.querySelector('.prev');
+    const nextBtn = carousel.querySelector('.next');
+
+    prevBtn.onclick = () => changeMedia(-1);
+    nextBtn.onclick = () => changeMedia(1);
+
+    function changeMedia(dir) {
+      if (carouselItems[currentIndex].tagName === 'VIDEO') carouselItems[currentIndex].pause();
+      carouselItems[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + dir + carouselItems.length) % carouselItems.length;
+      carouselItems[currentIndex].classList.add('active');
+      if (carouselItems[currentIndex].tagName === 'VIDEO') carouselItems[currentIndex].play();
+    }
+
+    modalOverlay.style.display = 'flex';
+  });
+});
+
+function closeModal() {
+  if(carouselItems) carouselItems.forEach(v => { if(v.tagName === 'VIDEO') v.pause(); });
+  modalOverlay.style.display = 'none';
 }
+
 
 // --- CLOSE MODAL ---
 function closeModal(){
-  const items = carousel.querySelectorAll('video');
-  items.forEach(v=>v.pause());
+  const modalOverlay = document.getElementById('modalOverlay');
+  const carousel = modalOverlay.querySelector('.carousel'); // ✅ define it here
+
+  if(carousel){
+    const items = carousel.querySelectorAll('video');
+    items.forEach(v => v.pause());
+  }
+
   modalOverlay.style.display = 'none';
 }
+
 
 // --- PRODUCT CARD BUTTONS ---
 document.querySelectorAll('.product .info-btn').forEach(btn=>{
@@ -714,9 +816,6 @@ document.querySelectorAll('.buy-now').forEach(btn => {
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
-
-    // Redirect to checkout page (replace with your checkout URL)
-    window.location.href = '/checkout.html';
   });
 });
 
