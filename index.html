@@ -266,6 +266,12 @@ footer {
     padding: 60px 30px;
   }
 }
+.category-icon {
+  font-size: 38px;
+  color: gold;
+  margin-bottom: 18px;
+  display: block;
+}
 
 </style>
 </head>
@@ -313,7 +319,7 @@ footer {
     <div class="hero-overlay">
       <div class="hero-content">
         <div class="hero-eyebrow">LIMITED</div>
-        <div id="countdown"></div>
+       <div class="countdown" id="countdown-ad2"></div>
         <h2>Luxury Dresses</h2>
         <p>New arrivals now available.</p>
         <a href="/female-page/index.html" class="promo-link">Shop Now</a>
@@ -387,6 +393,21 @@ footer {
     </div>
     <div class="hero-label">Ad</div>
   </div>
+  <!-- IMAGE AD 8 -->
+<div class="hero-slide" data-id="ad8">
+  <img src="/pics/WhatsApp Image 2026-02-03 at 16.53.56.jpeg">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <div class="hero-eyebrow">COMING SOON</div>
+      <div class="countdown" id="countdown-ad8"></div>
+      <h2>SAMURY New Drop</h2>
+      <p>Eid special launching soon.😛</p>
+      <a href="/female-page/index.html" class="promo-link">Explore</a>
+    </div>
+  </div>
+  <div class="hero-label">Ad</div>
+</div>
+
 
 </section>
 <div class="hero-dots" id="heroDots"></div>
@@ -424,19 +445,30 @@ footer {
   </a>
 </div>
 
-
 <section class="categories">
   <div class="category">
+    <i class="fa-solid fa-person-dress category-icon"></i>
     <h2>FEMALE SHOPPING</h2>
     <p>Elegant abayas & modest wear.</p>
     <a href="/female-page/index.html">Shop Now</a>
   </div>
+
   <div class="category">
+    <i class="fa-solid fa-user-tie category-icon"></i>
     <h2>MALE SHOPPING</h2>
     <p>Refined modest menswear.</p>
     <a href="/male page/index.html">Shop Now</a>
   </div>
+
+  <div class="category">
+    <i class="fa-solid fa-bag-shopping category-icon"></i>
+    <h2>ACCESSORIES</h2>
+    <p>Luxury bags, scarves & finishing touches.</p>
+    <a href="/accessories/index.html">Shop Now</a>
+  </div>
 </section>
+
+
 
 <footer>
   <p>© 2026 SAMURY. All Rights Reserved.</p>
@@ -480,36 +512,44 @@ function nextSlide(){
 let autoSlideInterval = setInterval(nextSlide,6000);
 showSlide(0);
 
-/* LIMITED AD COUNTDOWN */
-const limitedAdCountdown = () => {
-  const countdownEl = document.querySelector('#countdown');
-  if(!countdownEl) return;
+/* COUNTDOWN FUNCTION (REUSABLE) */
+function startCountdown(elementId, targetDate) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
 
-  const targetDate = new Date();
-  targetDate.setDate(targetDate.getDate() + 7);
-
-  const updateCountdown = () => {
+  const update = () => {
     const now = new Date();
     const diff = targetDate - now;
 
-    if(diff <= 0){
-      countdownEl.textContent = "Offer ended!";
-      clearInterval(countdownInterval);
+    if (diff <= 0) {
+      el.textContent = "LIVE ✨";
       return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
 
-    countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s left`;
+    el.textContent = `${d}d ${h}h ${m}m ${s}s`;
   };
 
-  updateCountdown();
-  const countdownInterval = setInterval(updateCountdown, 1000);
-};
-limitedAdCountdown();
+  update();
+  setInterval(update, 1000);
+}
+
+/* AD 2 COUNTDOWN */
+startCountdown(
+  "countdown-ad2",
+  new Date("2026-02-20T00:00:00") // change date if needed
+);
+
+/* AD 8 COUNTDOWN */
+startCountdown(
+  "countdown-ad8",
+  new Date("2026-03-20T00:00:00")
+);
+
 </script>
 </body>
 </html>

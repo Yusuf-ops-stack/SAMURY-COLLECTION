@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMURY | Accessories</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body {
+  font-family:'Poppins',sans-serif;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+.back-btn{
+    position:absolute;
+    top:20px;
+    left:20px;
+    background:gold;
+    padding:8px 12px;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
+    z-index:5
+}
+
+a { text-decoration:none; }
+
+/* HERO */
+.hero {
+  padding:50px 20px 40px;
+  text-align:center;
+}
+
+.hero h2 {
+  font-family:'Playfair Display',serif;
+  font-size:30px;
+  color:gold;
+  margin-bottom:12px;
+}
+
+.hero p {
+  max-width:100%;
+  margin:0 auto;
+  color:#ccc;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* ACCESSORIES GRID */
+.accessories {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:25px;
+  padding:40px 20px 70px;
+}
+
+.accessory {
+  background:linear-gradient(145deg,#111,#000);
+  border:1px solid gold;
+  border-radius:20px;
+  overflow:hidden;
+  transition:.3s ease;
+}
+
+.accessory:hover {
+  transform:translateY(-6px);
+  box-shadow:0 0 20px rgba(255,215,0,0.3);
+}
+
+.accessory img {
+  width:100%;
+  height:240px;
+  object-fit:cover;
+}
+
+.accessory-content {
+  padding:20px;
+  text-align:center;
+}
+
+.accessory-content h3 {
+  font-family:'Playfair Display',serif;
+  color:gold;
+  font-size:20px;
+  margin-bottom:6px;
+}
+
+.accessory-content p {
+  color:#bbb;
+  font-size:13px;
+  margin-bottom:14px;
+}
+
+.accessory-content a {
+  display:inline-block;
+  padding:12px 30px;
+  background:gold;
+  color:#000;
+  border-radius:30px;
+  font-weight:bold;
+  font-size:14px;
+}
+
+/* FOOTER */
+footer {
+  background:#111;
+  padding:25px 15px;
+  text-align:center;
+  color:#777;
+  border-top:1px solid #222;
+  font-size:12px;
+}
+
+/* TABLET */
+@media (min-width:600px) {
+  .accessories {
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero h2 {
+    font-size:36px;
+  }
+
+  .hero p {
+    font-size:15px;
+  }
+}
+
+/* DESKTOP */
+@media (min-width:1024px) {
+  .hero {
+    padding:80px 30px 60px;
+  }
+
+  .hero h2 {
+    font-size:54px;
+  }
+
+  .hero p {
+    font-size:18px;
+    max-width:600px;
+  }
+
+  .accessories {
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    padding:80px 80px 120px;
+    gap:40px;
+  }
+
+  .accessory img {
+    height:360px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+    <button class="back-btn" onclick="window.location.href='/homepage/index.html'">
+<i class="fa-solid fa-circle-left"></i>
+</button>
+  <h2>Accessories</h2>
+  <p>Elevate your look with refined accessories designed to complete every modest outfit with elegance.</p>
+</section>
+
+<section class="accessories">
+
+  <div class="accessory">
+    <img src="/Accessories pics//images (1).jpeg" alt="Luxury Bag">
+    <div class="accessory-content">
+      <h3>Luxury Bags</h3>
+      <p>Timeless designs crafted for elegance.</p>
+      <a href="#">View Collection</a>
+    </div>
+  </div>
+
+  <div class="accessory">
+    <img src="/Accessories pics/TerraSilkScarf1.webp" alt="Silk Scarf">
+    <div class="accessory-content">
+      <h3>Silk Scarves</h3>
+      <p>Soft textures with premium finishing.</p>
+      <a href="#">View Collection</a>
+    </div>
+  </div>
+
+  <div class="accessory">
+    <img src="/Accessories pics/jewellry.jpeg" alt="Jewelry">
+    <div class="accessory-content">
+      <h3>Jewelry</h3>
+      <p>Minimal pieces with a luxurious glow.</p>
+      <a href="#">View Collection</a>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <p>© 2026 SAMURY. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
