@@ -10,6 +10,17 @@
 
 <style>
 * { box-sizing: border-box; margin:0; padding:0; }
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body { font-family:'Poppins',sans-serif; background:#000; color:#fff; overflow-x:hidden; }
 a { text-decoration:none; }
 button, .header-icons i { user-select:none; cursor:pointer; }
@@ -40,11 +51,11 @@ header p { color:#ccc; font-size:14px; }
 .header-icons i:hover { color:#fff; }
 
 .side-menu {
-  position:fixed; top:0; right:-260px;
+  position:fixed; top:0; right:-300px;
   width:260px; height:100%;
   background:#111; border-left:2px solid gold;
   transition:right 0.3s ease;
-  z-index:9999; padding:50px 20px;
+  z-index:10000; padding:50px 20px;
 }
 .side-menu.active { right:0; }
 .side-menu .close-menu { font-size:24px; color:gold; margin-bottom:30px; }
