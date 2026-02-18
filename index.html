@@ -275,7 +275,31 @@ footer {
   margin-bottom: 18px;
   display: block;
 }
+.hero-navigation {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
 
+.hero-arrow {
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: #fff;
+  font-size: 30px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  pointer-events: all;
+  transition: background 0.3s;
+}
+
+.hero-arrow:hover {
+  background: rgba(0,0,0,0.8);
+}
 </style>
 </head>
 <body>
@@ -372,12 +396,12 @@ footer {
   </div>
 
   <div class="hero-slide" data-id="ad6">
-    <video autoplay muted loop><source src="/videos/starting from scratch.mp4" type="video/mp4"></video>
+    <video autoplay muted loop><source src="/pics/Eid drop 2.mp4" type="video/mp4"></video>
     <div class="hero-overlay">
       <div class="hero-content">
         <div class="hero-eyebrow">VIDEO AD</div>
-        <h2>Accessories</h2>
-        <p>Luxury bags & scarves in motion.</p>
+        <h2>Eid Preview</h2>
+        <p>Our Eid collection: The Sherry, Aura and Eid Luxe Abayas crafted for timeless elegance and special moments.</p>
         <a href="/female-page/index.html" class="promo-link">Shop Now</a>
       </div>
     </div>
@@ -385,12 +409,12 @@ footer {
   </div>
 
   <div class="hero-slide" data-id="ad7">
-    <video autoplay muted loop><source src="/videos/all.mp4" type="video/mp4"></video>
+    <video autoplay muted loop><source src="/pics/The Sherry Abaya Eid collection.mp4" type="video/mp4"></video>
     <div class="hero-overlay">
       <div class="hero-content">
         <div class="hero-eyebrow">VIDEO AD</div>
-        <h2>Season Sale</h2>
-        <p>Catch our seasonal highlights.</p>
+        <h2>The Eid Collection</h2>
+        <p>The Sherry Abayah🧋 DM to pre order Limited quantities</p>
         <a href="/female-page/index.html" class="promo-link">Shop Now</a>
       </div>
     </div>
@@ -410,7 +434,11 @@ footer {
   </div>
   <div class="hero-label">Ad</div>
 </div>
-
+<!-- Add inside your hero section -->
+<div class="hero-navigation">
+  <button class="hero-arrow left-arrow">&#10094;</button>
+  <button class="hero-arrow right-arrow">&#10095;</button>
+</div>
 
 </section>
 <div class="hero-dots" id="heroDots"></div>
@@ -471,10 +499,9 @@ footer {
   </div>
 </section>
 
-
-
 <footer>
-  <p>© 2026 SAMURY. All Rights Reserved.</p>
+© 2026 <span>SAMURY</span>. All Rights Reserved.<br>
+Website by <strong>BridgeTech Labs</strong>
 </footer>
 
 <script>
@@ -487,32 +514,79 @@ menuBtn.onclick = () => { sideMenu.classList.add('active'); overlay.style.displa
 closeMenu.onclick = overlay.onclick = () => { sideMenu.classList.remove('active'); overlay.style.display='none'; };
 cartBtn.onclick = () => location.href='/cart/index.html';
 
-/* HERO ROTATION */
+/* HERO ROTATION FOR IMAGES & VIDEOS */
 const slides = [...document.querySelectorAll('.hero-slide')];
 const dots = document.getElementById('heroDots');
 let index = 0;
+let autoSlideTimeout;
 
-slides.forEach((slide,i)=>{
-  slide.style.display='none';
+// Arrows
+const leftArrow = document.querySelector('.left-arrow');
+const rightArrow = document.querySelector('.right-arrow');
+
+// Initialize slides & dots
+slides.forEach((slide, i) => {
+  slide.style.display = 'none';
+
+  // dots
   const d = document.createElement('span');
   d.onclick = () => { showSlide(i); resetAutoSlide(); };
   dots.appendChild(d);
+
+  // video end listener
+  const video = slide.querySelector('video');
+  if(video){
+    video.onended = () => nextSlide();
+  }
 });
 
 function showSlide(i){
-  slides.forEach((s)=> s.style.display='none');
-  [...dots.children].forEach(d=>d.classList.remove('active'));
-  slides[i].style.display='block';
+  slides.forEach(s => {
+    s.style.display = 'none';
+    const vid = s.querySelector('video');
+    if(vid) vid.pause();
+  });
+
+  [...dots.children].forEach(d => d.classList.remove('active'));
+
+  slides[i].style.display = 'block';
   dots.children[i].classList.add('active');
+
+  const currentVideo = slides[i].querySelector('video');
+  clearTimeout(autoSlideTimeout);
+
+  if(currentVideo){
+    currentVideo.currentTime = 0;
+    currentVideo.play(); // video handles its own timing
+  } else {
+    autoSlideTimeout = setTimeout(nextSlide, 10000); // image auto 10s
+  }
+
   index = i;
 }
-
 function nextSlide(){
-  index = (index+1)%slides.length;
+  index = (index + 1) % slides.length;
   showSlide(index);
 }
 
-let autoSlideInterval = setInterval(nextSlide,6000);
+function prevSlide(){
+  index = (index - 1 + slides.length) % slides.length;
+  showSlide(index);
+}
+
+function resetAutoSlide(){
+  const currentVideo = slides[index].querySelector('video');
+  if(!currentVideo){
+    clearTimeout(autoSlideTimeout);
+    autoSlideTimeout = setTimeout(nextSlide, 10000);
+  }
+}
+
+// Arrow clicks
+rightArrow.onclick = () => { nextSlide(); resetAutoSlide(); };
+leftArrow.onclick = () => { prevSlide(); resetAutoSlide(); };
+
+// Start first slide
 showSlide(0);
 
 /* COUNTDOWN FUNCTION (REUSABLE) */
@@ -542,17 +616,13 @@ function startCountdown(elementId, targetDate) {
 }
 
 /* AD 2 COUNTDOWN */
-startCountdown(
-  "countdown-ad2",
-  new Date("2026-02-20T00:00:00") // change date if needed
-);
+startCountdown("countdown-ad2", new Date("2026-02-20T00:00:00"));
 
 /* AD 8 COUNTDOWN */
-startCountdown(
-  "countdown-ad8",
-  new Date("2026-03-20T00:00:00")
-);
-
+startCountdown("countdown-ad8", new Date("2026-03-20T00:00:00"));
 </script>
+
+
+
 </body>
 </html>
