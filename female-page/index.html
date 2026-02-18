@@ -696,14 +696,35 @@ document.querySelectorAll('.product .like-btn').forEach(btn=>{
   });
 });
 
-// --- PRODUCT CARD VIDEO PLAY ---
-document.querySelectorAll('.product .image-box').forEach(box=>{
+
+// --- PRODUCT CARD VIDEO PLAY & HIDE PLAY ICON ---
+document.querySelectorAll('.product .image-box').forEach(box => {
   const video = box.querySelector('video');
-  box.addEventListener('click', ()=>{
-    if(video.paused){ video.play(); video.muted=false; }
-    else video.pause();
+  const playIcon = box.querySelector('.play-icon');
+
+  // Click on box to play/pause video
+  box.addEventListener('click', () => {
+    if (video.paused) {
+      video.play();
+      video.muted = false;
+      playIcon.style.opacity = '0'; // hide play icon
+    } else {
+      video.pause();
+      playIcon.style.opacity = '1'; // show play icon
+    }
+  });
+
+  // Also hide play icon when video starts playing automatically (e.g., via hover)
+  video.addEventListener('play', () => {
+    playIcon.style.opacity = '0';
+  });
+
+  // Show play icon if video is paused by other means
+  video.addEventListener('pause', () => {
+    playIcon.style.opacity = '1';
   });
 });
+
 
 // --- ADD TO CART FUNCTIONALITY ---
 document.querySelectorAll('.cart-btn').forEach(btn => {
