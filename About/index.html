@@ -330,6 +330,28 @@ function contactProvider(provider){
   // Open WhatsApp
   window.open(`https://wa.me/${number}?text=${encodedMessage}`, '_blank');
 }
+ const loader = document.getElementById("page-loader");
+
+// Hide loader after load
+window.addEventListener("load", () => {
+  loader.classList.add("hidden");
+});
+
+// Show loader for internal links only
+document.addEventListener("click", function (e) {
+  const link = e.target.closest("a");
+
+  if (!link) return;
+
+  const href = link.getAttribute("href");
+
+  if (!href) return;
+
+  // Ignore external links
+  if (href.startsWith("http") || href.startsWith("wa.me") || href.startsWith("#")) return;
+
+  loader.classList.remove("hidden");
+});
 </script>
 
 
