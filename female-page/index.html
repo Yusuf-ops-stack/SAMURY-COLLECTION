@@ -73,8 +73,9 @@ header h1 {
 /* --- IMAGE/VIDEO BOX --- */
 .image-box {
   position: relative;
-  height: 320px;
+  height: 300px;
   cursor: pointer;
+  margin-bottom: -15px;
 }
 .product-img,
 .product-video {
@@ -106,7 +107,7 @@ header h1 {
 /* --- WATERMARK --- */
 .watermark {
   position: absolute;
-  bottom: 8px;
+  bottom: 1px;
   right: 8px;
   font-family: 'Playfair Display', serif;
   font-size: 14px;
@@ -135,15 +136,26 @@ header h1 {
   text-align: center;
 }
 .product-details h3 { color: gold; font-family: 'Playfair Display', serif; font-size: 16px; }
-.price { font-size: 13px; color: #ccc; }
+.price { 
+  font-size: 13px; 
+  color: #ccc;
+  margin-top: -10px;
+ }
 .buy-now, .cart-btn {
   border-radius: 20px;
   padding: 6px 14px;
   margin: 5px 0;
   border: none;
 }
-.buy-now { background: gold; color: #000; }
-.cart-btn { background: transparent; color: gold; border: 1px solid gold; }
+.buy-now { 
+  background: gold; 
+  color: #000; 
+}
+.cart-btn { 
+  background: transparent; 
+  color: gold; 
+  border: 1px solid gold;
+ }
 
 /* --- MODAL OVERLAY --- */
 .modal-overlay {
