@@ -600,6 +600,22 @@ footer a:hover {
       70%  { transform: rotate(260deg); }
       100% { transform: rotate(360deg); }
     }
+.share-btn {
+  border-radius: 20px;
+  padding: 6px 14px;
+  margin: 5px 0;
+  border: 1px solid gold;
+  background: transparent;
+  color: gold;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.share-btn:hover {
+  background: gold;
+  color: #000;
+}
 
 </style>
 </head>
@@ -647,7 +663,7 @@ footer a:hover {
     <option value="XL">XL</option>
   </select>
 </div>
-
+      <button class="share-btn">Share <i class="fa-solid fa-share-nodes"></i></button>
       <button class="buy-now">Buy Now</button>
       <button class="cart-btn">Add to Cart</button>
     </div>
@@ -1271,8 +1287,30 @@ document.addEventListener("click", function (e) {
 
   loader.classList.remove("hidden");
 });
+document.querySelectorAll('.product .share-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const productEl = btn.closest('.product');
+    const name = productEl.dataset.name;
+    const price = productEl.querySelector('.price').textContent;
+    const url = window.location.href; // current page
+    const message = `Check out this product from SAMURY: "${name}" for ${price}. See more here: ${url}`;
 
-
+    if (navigator.share) {
+      // Native share (mobile devices)
+      navigator.share({
+        title: name,
+        text: message,
+        url: url
+      }).catch(err => console.error(err));
+    } else {
+      // Fallback: copy to clipboard + alert
+      navigator.clipboard.writeText(message).then(() => {
+        alert("Product info copied! Share it with your friends.");
+      });
+    }
+  });
+});
 
 </script>
 
