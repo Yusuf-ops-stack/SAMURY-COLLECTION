@@ -450,6 +450,42 @@ footer {
   50% { transform: scale(1.3); }
   100% { transform: scale(1); }
 }
+.update-box button {
+  margin-top: 18px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(135deg, #000, #333);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Loader */
+.progress-container {
+  width: 100%;
+  background: #eee;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 25px;
+  margin-top: 20px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: gold;
+  text-align: center;
+  line-height: 25px;
+  color: black;
+  font-weight: bold;
+  transition: width 0.1s ease;
+}
 
 </style>
 </head>
@@ -803,71 +839,113 @@ document.addEventListener("click", function (e) {
 </script>
 <script>
 // 🔥 CHANGE THIS NUMBER EVERY TIME YOU UPDATE YOUR APP
-const APP_VERSION = "1.0.1";  
+const APP_VERSION = "1.0.3";
 
-const savedVersion = localStorage.getItem("app_version");
-const justUpdated = localStorage.getItem("just_updated");
+// Immediately check for success popup on page load
+checkImmediateUpdate();
 
-// If version is different → show refresh popup
-if (savedVersion !== APP_VERSION && !justUpdated) {
-  showRefreshPopup();
+// Function to check version periodically
+function checkAppVersion() {
+  const savedVersion = localStorage.getItem("app_version");
+
+  // If version changed while user is on the site → show refresh popup after 15 seconds
+  if (savedVersion !== APP_VERSION && !document.getElementById("updatePopup")) {
+    setTimeout(() => {
+      if (!document.getElementById("updatePopup")) {
+        showRefreshPopup();
+      }
+    }, 15000); // 15s delay
+  }
 }
 
-// After refresh → show success popup
-if (justUpdated === "true") {
-  showSuccessPopup();
-  localStorage.removeItem("just_updated");
-}
+// Run version check every 15 seconds for real-time updates
+setInterval(checkAppVersion, 15000);
 
 // FIRST POPUP (Ask to Refresh)
 function showRefreshPopup() {
   const popup = document.createElement("div");
+  popup.id = "updatePopup";
   popup.innerHTML = `
-    <div id="updatePopup">
-      <div class="update-box">
-        <h2>🚀 New Update Available</h2>
-        <p>We've added new features and improvements.</p>
-        <p>Please refresh to get the latest version.</p>
-        <button onclick="applyUpdate()">Refresh Now</button>
-      </div>
+    <div class="update-box">
+      <h2>🚀 New Update Available</h2>
+      <p>We've added new features and improvements.</p>
+      <p>Please refresh to get the latest version.</p>
+      <button onclick="startUpdateLoader()">Refresh Now</button>
     </div>
   `;
   document.body.appendChild(popup);
 }
 
-// When user clicks refresh
-function applyUpdate() {
-  localStorage.setItem("app_version", APP_VERSION);
-  localStorage.setItem("just_updated", "true");
-  location.reload();
+// START PROGRESS LOADER
+function startUpdateLoader() {
+  const popup = document.getElementById("updatePopup");
+  if (!popup) return;
+
+  // Replace content with loader
+  popup.innerHTML = `
+    <div class="update-box">
+      <h2>Updating...</h2>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar">0%</div>
+      </div>
+    </div>
+  `;
+
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 5) + 1; // Random increment for effect
+    if (progress > 100) progress = 100;
+
+    const bar = document.getElementById("progressBar");
+    bar.style.width = progress + "%";
+    bar.textContent = progress + "%";
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      localStorage.setItem("app_version", APP_VERSION);
+      localStorage.setItem("just_updated", "true");
+      location.reload();
+    }
+  }, 100); // update every 100ms
 }
 
 // SECOND POPUP (After Refresh)
 function showSuccessPopup() {
+  if (document.getElementById("updatePopup")) return; // avoid duplicate
   const popup = document.createElement("div");
+  popup.id = "updatePopup";
   popup.innerHTML = `
-    <div id="updatePopup">
-      <div class="update-box">
-        <div class="checkmark">✔</div>
-        <h2>Updated to Version ${APP_VERSION}</h2>
-        <p>Update completed successfully!</p>
-        <p class="enjoy">Enjoy Shopping in <strong>SAMURY</strong> 🛍️</p>
-      </div>
+    <div class="update-box">
+      <div class="checkmark">✔</div>
+      <h2>Updated to Version ${APP_VERSION}</h2>
+      <p>Update completed successfully!</p>
+      <p class="enjoy">Enjoy Shopping in <strong>SAMURY</strong> 🛍️</p>
     </div>
   `;
   document.body.appendChild(popup);
 
   setTimeout(() => {
-    document.getElementById("updatePopup").classList.add("fade-out");
+    const el = document.getElementById("updatePopup");
+    if (el) el.classList.add("fade-out");
     setTimeout(() => {
-      document.getElementById("updatePopup").remove();
+      const el2 = document.getElementById("updatePopup");
+      if (el2) el2.remove();
     }, 500);
   }, 5000);
 }
+
+// Immediate check for success popup on page load
+function checkImmediateUpdate() {
+  const justUpdated = localStorage.getItem("just_updated");
+  if (justUpdated === "true") {
+    showSuccessPopup();
+    localStorage.removeItem("just_updated");
+  }
+
+  // Also check version immediately for in-page updates (will delay refresh popup)
+  checkAppVersion();
+}
 </script>
-
-
-
 
 </body>
 </html>
