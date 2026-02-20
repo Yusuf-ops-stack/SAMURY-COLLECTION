@@ -640,7 +640,26 @@ footer a:hover {
   <div id="page-loader">
     <div class="ring"></div>
   </div>
-  
+<button id="viewCartBtn" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: black;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 24px;
+  font-weight: bold;
+  display: none;
+  z-index: 10000;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,215,0,0.6);
+">
+  <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i> View Cart
+</button>
+
+</button>
+
 <header>
   <button class="back-btn" onclick="window.location.href='/homepage/index.html'">
     <i class="fa-solid fa-circle-left"></i>
@@ -1326,6 +1345,49 @@ document.querySelectorAll('.product .share-btn').forEach(btn => {
       });
     }
   });
+});
+const viewCartBtn = document.getElementById('viewCartBtn');
+
+document.querySelectorAll('.cart-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+
+    const productEl = btn.closest('.product');
+    const name = productEl.dataset.name;
+    const priceText = productEl.querySelector('.price').textContent;
+    const img = productEl.querySelector('.product-img').src;
+    const qty = parseInt(productEl.querySelector('.qty-input').value);
+    const size = productEl.querySelector('.size-select').value;
+
+    const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    const existingIndex = cart.findIndex(item => item.name === name && item.size === size);
+    if(existingIndex > -1){
+      cart[existingIndex].qty += qty;
+    } else {
+      cart.push({ name, price, img, qty, size });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Show notification with View Cart option
+    viewCartBtn.style.display = 'block';
+
+    // Automatically hide after 5 seconds
+    clearTimeout(viewCartBtn.timeoutId);
+    viewCartBtn.timeoutId = setTimeout(() => {
+      viewCartBtn.style.display = 'none';
+    }, 5000);
+
+    // Optional alert (can remove if using floating button)
+    // alert(`${qty} x ${name} (Size: ${size}) added to cart!`);
+  });
+});
+
+// Go to cart page when clicked
+viewCartBtn.addEventListener('click', () => {
+  window.location.href = '/cart/index.html'; // replace with your cart page
 });
 
 </script>

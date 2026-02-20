@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMURY | Product Reviews</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f8f8f8;
+    color: #333;
+  }
+
+  header {
+    background: #000;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .product-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .product-header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .product-header img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .product-details {
+    flex: 1;
+  }
+
+  .product-details h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .product-details p {
+    margin: 10px 0;
+  }
+
+  .reviews-section {
+    margin-top: 30px;
+  }
+
+  .review {
+    border-top: 1px solid #ddd;
+    padding: 15px 0;
+  }
+
+  .review:first-child {
+    border-top: none;
+  }
+
+  .review .review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .review .review-rating {
+    color: gold;
+  }
+
+  .add-review {
+    margin-top: 30px;
+  }
+
+  .add-review input, .add-review textarea, .add-review select, .add-review button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .add-review button {
+    background: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .add-review button:hover {
+    background: #333;
+  }
+
+  .rating-stars span {
+    font-size: 20px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>SAMURY | Product Reviews</h1>
+</header>
+
+<div class="product-container">
+  <div class="product-header">
+    <img src="https://via.placeholder.com/150" alt="Product Image">
+    <div class="product-details">
+      <h2>Elegant Dress</h2>
+      <p>Price: KES 5,000</p>
+      <p>Stylish and comfortable, perfect for modest fashion lovers.</p>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <h3>Reviews</h3>
+    <div id="reviews">
+      <!-- Reviews will be added here dynamically -->
+    </div>
+  </div>
+
+  <div class="add-review">
+    <h3>Add Your Review</h3>
+    <input type="text" id="reviewerName" placeholder="Your Name">
+    <select id="reviewRating">
+      <option value="">Select Rating</option>
+      <option value="1">★☆☆☆☆</option>
+      <option value="2">★★☆☆☆</option>
+      <option value="3">★★★☆☆</option>
+      <option value="4">★★★★☆</option>
+      <option value="5">★★★★★</option>
+    </select>
+    <textarea id="reviewText" rows="4" placeholder="Write your review here..."></textarea>
+    <button onclick="addReview()">Submit Review</button>
+  </div>
+</div>
+
+<script>
+  const reviewsContainer = document.getElementById('reviews');
+
+  function displayReview(name, rating, text) {
+    const reviewEl = document.createElement('div');
+    reviewEl.classList.add('review');
+    reviewEl.innerHTML = `
+      <div class="review-header">
+        <strong>${name}</strong>
+        <span class="review-rating">${'★'.repeat(rating)}${'☆'.repeat(5-rating)}</span>
+      </div>
+      <p>${text}</p>
+    `;
+    reviewsContainer.prepend(reviewEl);
+  }
+
+  function addReview() {
+    const name = document.getElementById('reviewerName').value.trim();
+    const rating = parseInt(document.getElementById('reviewRating').value);
+    const text = document.getElementById('reviewText').value.trim();
+
+    if (!name || !rating || !text) {
+      alert('Please fill all fields!');
+      return;
+    }
+
+    displayReview(name, rating, text);
+
+    // Clear inputs
+    document.getElementById('reviewerName').value = '';
+    document.getElementById('reviewRating').value = '';
+    document.getElementById('reviewText').value = '';
+  }
+
+  // Sample reviews
+  displayReview('Amina', 5, 'Absolutely love this dress! Fits perfectly.');
+  displayReview('Fatima', 4, 'Very comfortable and elegant.');
+</script>
+
+</body>
+</html>
